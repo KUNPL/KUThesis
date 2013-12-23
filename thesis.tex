@@ -1,0 +1,67 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This class is made not only for one-sided but also  %
+% for two-sided print out.                            %
+% After printed out, you should ask the print shop    %
+% to cut out the paper equal to the amount below.     %
+%                                                     %
+%  Until the approval page                            %
+%       Left: 11 mm                  Top: 15 mm       %
+%      Right: 17 mm               Bottom: 15 mm       %
+%                                                     %
+%  After the approval page                            %
+%       Left:  9 mm                  Top: 15 mm       %
+%      Right: 19 mm               Bottom: 15 mm       %
+%                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 'doctor - master', 'final - draft' options are available.
+\documentclass[doctor,final]{KUThesis}
+
+\abstractContents{\input{abstract.tex}}
+\acknowledgementContents{\input{acknowledgement.tex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                 Change the information below                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{
+This field will be filled with you thesis title! Wow! you made it!
+}
+
+\author[chinese]{洪}{吉}{同}
+\author[english]{Hong}{Gil}{Dong}
+
+\advisor{洪판서}{Pahn Seo Hong}
+
+\department{PH}
+
+\graduateDate{2016}{2}
+\submitDate{2015}{12}{30}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Until here                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\makecontents
+\emptypage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include the contents files in the order you like %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{introduction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                End of including                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{IEEEbib}
+\bibliography{library.bib}
+
+\end{document}
