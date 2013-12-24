@@ -154,7 +154,6 @@
 \newcommand{\department}[2] {%
     \ifthenelse{\equal{#1}{PH}}
         {\newcommand{\@deptNameEng}{Physics}
-         \newcommand{\@deptNameEngFull}{Department of Physics}
          \newcommand{\@deptNameChn}{物\ 理\ 學\ 科}} {}
 }
 \@onlypreamble{\department}
@@ -275,7 +274,7 @@
             \\[5mm]
             \fontsize{16pt}{16pt}\selectfont{\bf \@authorEng}
             \\[5mm]
-            \fontsize{16pt}{16pt}\selectfont{\bf \@deptNameEngFull}
+            \fontsize{16pt}{16pt}\selectfont{\bf Department of \@deptNameEng}
             \\[15mm]
             \fontsize{18pt}{18pt}\selectfont{\bf Graduate School}
             \\[5mm]
