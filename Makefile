@@ -1,6 +1,5 @@
 thesis:
 	@pdflatex $@
-	@pdflatex $@
 	@bibtex $@
 	@pdflatex $@
 	@pdflatex $@
