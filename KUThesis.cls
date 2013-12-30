@@ -374,6 +374,7 @@
 \newcommand{\makeabstract}[1]{%
   \newpage
   \thispagestyle{empty} \noindent
+  \addcontentsline{toc}{chapter}{Abstract}
   \begin{minipage}[t][202mm][c]{\textwidth}
     \begin{center}
       \fontsize{16pt}{16pt}\selectfont{\bf Abstract}
@@ -390,9 +391,15 @@
 %% 목차 일괄 생성
 %%
 \newcommand{\makecontents}{%            % TOC, LOT, LOF 생성
+  \addcontentsline{toc}{chapter}{Contents}
   \tableofcontents
+  \newpage
+  \addcontentsline{toc}{chapter}{List of Tables}
   \listoftables
+  \newpage
+  \addcontentsline{toc}{chapter}{List of Figures}
   \listoffigures
+  \newpage
 }
 
 %%
@@ -401,6 +408,7 @@
 \newcommand{\makeacknowledgement}[1]{%
   \newpage
   \thispagestyle{empty} \noindent
+  \addcontentsline{toc}{chapter}{Acknowledgement}
   \begin{minipage}[t][202mm][c]{\textwidth}
     \begin{center}
       \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
