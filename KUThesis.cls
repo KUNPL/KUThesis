@@ -35,7 +35,9 @@
 \LoadClass[11pt,onecolumn,oneside]{report}
 
 %% bibliography
-\usepackage[square,comma,sort&compress,longnamesfirst]{natbib}
+\usepackage[square,comma,numbers,sort&compress]{natbib}
+
+\usepackage[nottoc]{tocbibind}
 
 %% 들여쓰기
 \usepackage{indentfirst}
@@ -392,14 +394,11 @@
 %% 목차 일괄 생성
 %%
 \newcommand{\makecontents}{%            % TOC, LOT, LOF 생성
-  \addcontentsline{toc}{chapter}{Contents}
   \tableofcontents
   \newpage
-  \addcontentsline{toc}{chapter}{List of Tables}
-  \listoftables
-  \newpage
-  \addcontentsline{toc}{chapter}{List of Figures}
   \listoffigures
+  \newpage
+  \listoftables
   \newpage
 }
 
