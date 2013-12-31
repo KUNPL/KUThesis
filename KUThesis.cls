@@ -15,6 +15,8 @@
 \newif\if@isDoctor
 \newif\if@isDraft
 \newif\if@pdfdoc
+\newif\if@isDebug
+\newif\if@isTwosides
 
 %% 새 옵션 모음 - doctor|master, final|draft
 \DeclareOption{doctor}       {\@isDoctortrue}
@@ -22,6 +24,9 @@
 \DeclareOption{final}        {\@isDraftfalse}
 \DeclareOption{draft}        {\@isDrafttrue}
 \DeclareOption{pdfdoc}       {\@pdfdoctrue}
+\DeclareOption{debug}        {\@isDebugtrue}
+\DeclareOption{twosides}     {\@isTwosidestrue}
+\DeclareOption{oneside}      {\@isTwosidesfalse}
 
 %% leqno,fleqn,openbib 옵션은 그대로 report 클래스에 전달
 \DeclareOption{leqno}  {\PassOptionsToClass{leqno}  {report}}
@@ -32,12 +37,30 @@
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
-\LoadClass[11pt,onecolumn,oneside]{report}
+\if@isTwosides
+  \LoadClass[11pt,onecolumn,twosides]{report}
+\else
+  \LoadClass[11pt,onecolumn,oneside]{report}
+\fi
 
 %% bibliography
 \usepackage[square,comma,numbers,sort&compress]{natbib}
 
+%% 여백 체크용 디버그 옵션
+\if@isDebug
+  \usepackage[a4,frame,center]{crop}
+\fi
+
+%% List of figures와 List of tables를 Table of Contents에 추가
 \usepackage[nottoc]{tocbibind}
+
+%% 편집용지 설정 - 좀 바꿔야 할 듯 나중에
+\usepackage[left = 25mm ,       right = 15mm,
+             top = 30mm,       bottom = 30mm,
+      paperwidth = 182mm, paperheight = 257mm]{geometry}
+
+%% 줄간격 설정
+\linespread{1.3}
 
 %% 들여쓰기
 \usepackage{indentfirst}
@@ -64,26 +87,25 @@
 
 \AtBeginDocument{%                           % \begin{document}와 함께 실행
     \checkparameters                         % 문서 변수가 올바른지 점검
-    \makefrontcover \maketitle               % 앞표지, 속표지 생성
+    \newgeometry{       left = 40mm,
+                       right = 30mm,
+                         top = 30mm,
+                      bottom = 30mm,
+                  paperwidth = 182mm,
+                 paperheight = 257mm}        % 여백 다른 페이지용 여백
+    \makefrontcover                          % 앞표지 생성
+    \maketitle                               % 속표지 생성
     \if@isDraft                              % final 옵션이 지정되어 있으면
     \else
       \makeapproval                          % 제출승인서, 심사완료검인 생성
     \fi 
+    \restoregeometry                         % 여백 되돌림
     \makeabstract                            % 초록 페이지 생성
     \makecontents
 }
 \AtEndDocument{                             % \end{document}와 함께 실행
   \makeacknowledgement
 }
-
-%% 편집용지 설정 - 좀 바꿔야 할 듯 나중에
-%\usepackage[left=34.0mm,right=34.0mm,top=45mm,bottom=45mm,a4paper]{geometry}
-\usepackage[left=25.0mm,right=15.0mm,top=30mm,bottom=30mm,paperwidth=182mm,paperheight=257mm]{geometry}
-%\setlength{\pdfpagewidth}{182mm}
-%\setlength{\pdfpageheight}{257mm}
-
-%% 줄간격 설정
-\linespread{1.3}
 
 %% 고려대학교 공식 영문명칭
 \newcommand{\@koreauniv}{Korea University}
@@ -260,17 +282,17 @@
     \newpage
     \renewcommand{\baselinestretch}{1.3}%
     \thispagestyle{empty} \noindent%
-    \hspace{15mm}\begin{minipage}[t][12mm][t]{112mm}
+    \begin{minipage}[t][12mm][t]{112mm}
         \begin{center}
             \fontsize{16pt}{16pt}\selectfont\bf{Thesis for the Degree\\of \@degreeEng}
         \end{center}
     \end{minipage}\\[30mm] \noindent
-    \hspace*{15mm}\begin{minipage}[t][50mm][t]{112mm}
+    \begin{minipage}[t][50mm][t]{112mm}
         \begin{center}
             \fontsize{21pt}{21pt}\selectfont{\bf \@titleEng}
         \end{center}
     \end{minipage}\vfill \noindent
-    \hspace{15mm}\begin{minipage}[b][85mm][b]{112mm}
+    \begin{minipage}[b][85mm][b]{112mm}
         \begin{center}
             \fontsize{16pt}{16pt}\selectfont{\bf by}
             \\[5mm]
@@ -287,6 +309,8 @@
         \end{center}
     \end{minipage}
     \newpage
+    \mbox{}
+    \thispagestyle{empty}
 }
 
 %%
@@ -296,7 +320,7 @@
     \newpage
     \renewcommand{\baselinestretch}{1.3}%
     \thispagestyle{empty} \noindent
-    \hspace{15mm}\begin{minipage}[t][16pt][t]{112mm}
+    \begin{minipage}[t][16pt][t]{112mm}
       \begin{center}
         \fontsize{16pt}{16pt}\selectfont\bf{\@advisorMajorChn\ 敎授指導}
         \\[5mm]
@@ -305,7 +329,7 @@
         \fontsize{21pt}{21pt}\selectfont{\bf \@titleEng}
       \end{center}
     \end{minipage}\vfill \noindent
-    \hspace{15mm}\begin{minipage}[b][110mm][b]{112mm}
+    \begin{minipage}[b][110mm][b]{112mm}
       \begin{center}
         \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 物理學 \@degreeChn士學位 論文으로 提出함}
         \\[30mm]
@@ -320,6 +344,8 @@
       \end{center}
     \end{minipage}
     \newpage
+    \mbox{}
+    \thispagestyle{empty}
 }
 
 \usepackage{soul}
@@ -333,7 +359,7 @@
   \thispagestyle{empty} \noindent%
   \renewcommand{\baselinestretch}{1.3}
   \\[10mm]
-  \hspace*{15mm}\begin{minipage}[t][20mm][t]{112mm}
+  \begin{minipage}[t][20mm][t]{112mm}
     \begin{center}
       \fontsize{15.5pt}{15.5pt}\selectfont{\bf \@authorChn의 物理學 \@degreeChn士學位論文 審査를 完了함}
       \\[30mm]
@@ -367,7 +393,6 @@
       \else\fi
     \end{center}
   \end{minipage}
-  \newpage
 }
 
 %%
@@ -388,6 +413,8 @@
     \fontsize{11pt}{11pt}\selectfont{\indent\@abstractContents}
   \end{minipage}
   \newpage
+  \mbox{}
+  \thispagestyle{empty}
 }
 
 %%
