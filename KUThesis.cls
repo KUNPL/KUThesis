@@ -374,6 +374,7 @@
 \newcommand{\makeabstract}[1]{%
   \newpage
   \thispagestyle{empty} \noindent
+  \pagenumbering{gobble}
   \addcontentsline{toc}{chapter}{Abstract}
   \begin{minipage}[t][202mm][c]{\textwidth}
     \begin{center}
@@ -408,6 +409,7 @@
 \newcommand{\makeacknowledgement}[1]{%
   \newpage
   \thispagestyle{empty} \noindent
+  \pagenumbering{gobble}
   \addcontentsline{toc}{chapter}{Acknowledgement}
   \begin{minipage}[t][202mm][c]{\textwidth}
     \begin{center}
