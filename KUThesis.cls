@@ -258,6 +258,7 @@
 % @command 본문 추가
 \newcommand{\addContents}[1]{
   \input{#1}
+
   \addevenpage
 }
 
