@@ -69,7 +69,7 @@
 
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
-\RequirePackage{amsmath,amssymb,textcomp}
+\RequirePackage{amsmath,amssymb,textcomp,bm}
 \RequirePackage[cjk]{kotex}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
