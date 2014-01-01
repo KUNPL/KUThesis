@@ -52,7 +52,9 @@
 \fi
 
 %% List of figures와 List of tables를 Table of Contents에 추가
-\usepackage[nottoc]{tocbibind}
+%\usepackage[nottoc]{tocbibind}
+%% Table of contents, List of figures, List of tables를 Table of Contents에 추가
+\usepackage{tocbibind}
 
 %% 편집용지 설정 - 좀 바꿔야 할 듯 나중에
 %\usepackage[left = 25mm ,       right = 15mm,
