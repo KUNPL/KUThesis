@@ -136,8 +136,19 @@
 %\pagestyle{koreauniv}
 
 % @command title 논문 제목
-\renewcommand{\title}[1] {%
-\newcommand{\@titleEng}{#1}{}%
+\renewcommand{\title}[2] {
+  \ifnum#1=2
+    \newcommand{\@titleSize}{21pt}
+    \newcommand{\@univSize}{18pt}
+  \else
+    \ifnum#1=0
+      \newcommand{\@titleSize}{30pt}
+    \else
+      \newcommand{\@titleSize}{28pt}
+    \fi
+    \newcommand{\@univSize}{20pt}
+  \fi
+  \newcommand{\@titleEng}{#2}
 }
 \@onlypreamble{\title}
 
@@ -308,9 +319,9 @@
             \fontsize{16pt}{16pt}\selectfont\bf{Thesis for the Degree\\of \@degreeEng}
         \end{center}
     \end{minipage}\\[30mm] \noindent
-    \begin{minipage}[t][50mm][t]{112mm}
+    \hspace*{-15mm}\begin{minipage}[t][50mm][t]{142mm}
         \begin{center}
-            \fontsize{21pt}{21pt}\selectfont{\bf \@titleEng}
+            \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleEng}
         \end{center}
     \end{minipage}\vfill \noindent
     \begin{minipage}[b][85mm][b]{112mm}
@@ -323,7 +334,7 @@
             \\[15mm]
             \fontsize{18pt}{18pt}\selectfont{\bf Graduate School}
             \\[5mm]
-            \fontsize{18pt}{18pt}\selectfont{\bf \@koreauniv}
+            \fontsize{\@univSize}{\@univSize}\selectfont{\bf \@koreauniv}
             \\[10mm]
             \fontsize{16pt}{16pt}\selectfont{\bf
             \@dateUSenglish{\@graduateYear}{\@graduateMonth}}
@@ -339,13 +350,13 @@
     \newpage
     \renewcommand{\baselinestretch}{1.3}%
     \thispagestyle{empty} \noindent
-    \begin{minipage}[t][16pt][t]{112mm}
+    \hspace*{-15mm}\begin{minipage}[t][16pt][t]{142mm}
       \begin{center}
         \fontsize{16pt}{16pt}\selectfont\bf{\@advisorMajorChn\ 敎授指導}
         \\[5mm]
         \fontsize{16pt}{16pt}\selectfont\bf{\@degreeChn\ 士\ 學\ 位\ 論\ 文}
         \\[30mm]
-        \fontsize{21pt}{21pt}\selectfont{\bf \@titleEng}
+        \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleEng}
       \end{center}
     \end{minipage}\vfill \noindent
     \begin{minipage}[b][110mm][b]{112mm}
@@ -354,7 +365,7 @@
         \\[30mm]
         \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
         \\[30mm]
-        \fontsize{18pt}{18pt}\selectfont{\bf 高\ 麗\ 大\ 學\ 交\ 大\ 學\ 院}
+        \fontsize{\@univSize}{\@univSize}\selectfont{\bf 高\ 麗\ 大\ 學\ 交\ 大\ 學\ 院}
         \\[5mm]
         \fontsize{16pt}{16pt}\selectfont{\bf \@deptNameChn}
         \\[10mm]

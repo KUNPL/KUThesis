@@ -2,24 +2,39 @@
 % 'doctor - master': 박사인가 석사인가
 % 'final - draft': 최종본인가 초안인가
 % 'twosides - oneside': 양면인가 단면인가
-\documentclass[doctor,final,twosides,debug]{KUThesis}
+%
+% 예제
+% \documentclass[master,final,oneside]{KUThesis}
+
+% 기본옵션은 [doctor,draft,twoside] 입니다.
+\documentclass{KUThesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   아래 정보를 꼭 바꾸세요!                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{
+% 첫번째 인수의 숫자
+% 0 : 제목이 10자 이하일 경우
+% 1 : 제목이 10자 이상 1줄일 경우
+% 2 : 제목이 2줄 이상일 경우
+\title{2}{
 This field will be filled with you thesis title! Wow! you made it!
 }
 
+% 본인의 이름 성,이름 순으로 한글자씩
 \author[chinese]{洪}{吉}{同}
 \author[english]{Hong}{Gil}{Dong}
 
+% 지도교수님 성함 {한자이름}{영문이름}
 \advisor{洪판서}{Pahn Seo Hong}
 
+% 전공
 \department{PH}
 
+% 졸업년월
 \graduateDate{2016}{2}
+
+% 제출 연,월,일
 \submitDate{2015}{12}{30}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,6 +47,7 @@ This field will be filled with you thesis title! Wow! you made it!
 %         본문 파일을 이 아래에 추가하세요!        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% 꼭 addContents함수를 이용해서 추가해야 양면출력이 제대로 됩니다!
 \addContents{introduction}
 \addContents{conclusion}
 
