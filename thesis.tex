@@ -1,16 +1,14 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This class is made not only for one-sided but also  %
-% for two-sided print out.                            %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% 'doctor - master', 'final - draft' options are available.
+% 사용 가능한 옵션 리스트는 아래와 같습니다.
+% 'doctor - master': 박사인가 석사인가
+% 'final - draft': 최종본인가 초안인가
+% 'twosides - oneside': 양면인가 단면인가
 \documentclass[doctor,final,twosides,debug]{KUThesis}
 
 \abstractContents{\input{abstract.tex}}
 \acknowledgementContents{\input{acknowledgement.tex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                 Change the information below                 %
+%                   아래 정보를 꼭 바꾸세요!                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{
@@ -28,31 +26,20 @@ This field will be filled with you thesis title! Wow! you made it!
 \submitDate{2015}{12}{30}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                         Until here                           %
+%                          여기까지!                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\pagenumbering{roman}
-\setcounter{page}{1}
-\makecontents
-\emptypage
-
-\pagenumbering{arabic}
-\setcounter{page}{1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Include the contents files in the order you like %
+%         본문 파일을 이 아래에 추가하세요!        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\include{introduction}
-\include{conclusion}
+\addContents{introduction}
+\addContents{conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                End of including                  %
+%                  여기까지 추가                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\bibliographystyle{apsrev4-1}
-%\bibliographystyle{IEEEtranN}
-\bibliography{library.bib}
 
 \end{document}

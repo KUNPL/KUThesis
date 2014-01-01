@@ -66,7 +66,7 @@
 \usepackage{indentfirst}
 \setlength\parindent{2.0em}
 
-\RequirePackage{ifthen}       % 추가 패키지 설정
+\RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
 \RequirePackage[cjk]{kotex}
 
@@ -86,24 +86,35 @@
 \fi
 
 \AtBeginDocument{%                           % \begin{document}와 함께 실행
-    \checkparameters                         % 문서 변수가 올바른지 점검
-    \newgeometry{       left = 40mm,
-                       right = 30mm,
-                         top = 30mm,
-                      bottom = 30mm,
-                  paperwidth = 182mm,
-                 paperheight = 257mm}        % 여백 다른 페이지용 여백
-    \makefrontcover                          % 앞표지 생성
-    \maketitle                               % 속표지 생성
-    \if@isDraft                              % final 옵션이 지정되어 있으면
-    \else
-      \makeapproval                          % 제출승인서, 심사완료검인 생성
-    \fi 
-    \restoregeometry                         % 여백 되돌림
-    \makeabstract                            % 초록 페이지 생성
-    \makecontents
+  \checkparameters                         % 문서 변수가 올바른지 점검
+  \newgeometry{       left = 40mm,
+                     right = 30mm,
+                       top = 30mm,
+                    bottom = 30mm,
+                paperwidth = 182mm,
+               paperheight = 257mm}        % 여백 다른 페이지용 여백
+  \makefrontcover                          % 앞표지 생성
+  \maketitle                               % 속표지 생성
+  \if@isDraft                              % final 옵션이 지정되어 있으면
+  \else
+    \makeapproval                          % 제출승인서, 심사완료검인 생성
+  \fi 
+  \restoregeometry                         % 여백 되돌림
+  \makeabstract                            % 초록 페이지 생성
+
+  \pagenumbering{roman}
+  \setcounter{page}{1}
+  \makecontents
+
+  \pagenumbering{arabic}
+  \setcounter{page}{1}
 }
 \AtEndDocument{                             % \end{document}와 함께 실행
+  \bibliographystyle{apsrev4-1}
+% \bibliographystyle{IEEEtranN}
+  \bibliography{library.bib}
+  \addevenpage
+
   \makeacknowledgement
 }
 
@@ -231,6 +242,13 @@
 }
 \@onlypreamble{\abstractContents}
 
+% @command 본문 추가
+\newcommand{\addContents}[1]{
+  \input{#1}
+
+  \addevenpage
+}
+
 % @command acknowledge 감사의 글
 \newcommand{\acknowledgementContents}[1]{
   \newcommand{\@acknowledgementContents}{#1}
@@ -276,6 +294,18 @@
 }
 
 %%
+%% 양면 출력일 때 홀수 페이질 경우 빈 페이지 추가
+%%
+\newcommand{\addevenpage}{
+  \if@isTwosides
+    \checkoddpage
+    \ifoddpage
+      \emptypage
+    \fi
+  \fi
+}
+
+%%
 %% 앞표지 생성
 %%
 \newcommand{\makefrontcover}{%
@@ -308,9 +338,7 @@
             \@dateUSenglish{\@graduateYear}{\@graduateMonth}}
         \end{center}
     \end{minipage}
-    \newpage
-    \mbox{}
-    \thispagestyle{empty}
+    \addevenpage
 }
 
 %%
@@ -343,9 +371,7 @@
         \fontsize{14pt}{14pt}\selectfont{\bf \hspace{10mm} (印)}
       \end{center}
     \end{minipage}
-    \newpage
-    \mbox{}
-    \thispagestyle{empty}
+    \addevenpage
 }
 
 \usepackage{soul}
@@ -393,6 +419,7 @@
       \else\fi
     \end{center}
   \end{minipage}
+  \addevenpage
 }
 
 %%
@@ -403,18 +430,15 @@
   \thispagestyle{empty} \noindent
   \pagenumbering{gobble}
   \addcontentsline{toc}{chapter}{Abstract}
-  \begin{minipage}[t][202mm][c]{\textwidth}
-    \begin{center}
-      \fontsize{16pt}{16pt}\selectfont{\bf Abstract}
-    \end{center}
+  \vspace*{\fill}
+  \begin{center}
+    \fontsize{16pt}{16pt}\selectfont{\bf Abstract}
+  \end{center}
 
-    \linespread{1.3}
-    \setlength\parindent{2.0em}
-    \fontsize{11pt}{11pt}\selectfont{\indent\@abstractContents}
-  \end{minipage}
-  \newpage
-  \mbox{}
-  \thispagestyle{empty}
+  \setlength\parindent{5mm}
+  \fontsize{11pt}{11pt}\selectfont{\indent\@abstractContents}
+  \vspace*{\fill}
+  \addevenpage
 }
 
 %%
@@ -422,11 +446,11 @@
 %%
 \newcommand{\makecontents}{%            % TOC, LOT, LOF 생성
   \tableofcontents
-  \newpage
+  \addevenpage
   \listoffigures
-  \newpage
+  \addevenpage
   \listoftables
-  \newpage
+  \addevenpage
 }
 
 %%
@@ -437,14 +461,12 @@
   \thispagestyle{empty} \noindent
   \pagenumbering{gobble}
   \addcontentsline{toc}{chapter}{Acknowledgement}
-  \begin{minipage}[t][202mm][c]{\textwidth}
-    \begin{center}
-      \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
-    \end{center}
+  \begin{center}
+    \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
+  \end{center}
 
-    \linespread{1.3}
-    \setlength\parindent{2.0em}
-    \fontsize{11pt}{11pt}\selectfont{\indent\@acknowledgementContents}
-  \end{minipage}
-  \newpage
+  \linespread{1.3}
+  \setlength\parindent{5mm}
+  \fontsize{11pt}{11pt}\selectfont{\indent\@acknowledgementContents}
+  \addevenpage
 }
