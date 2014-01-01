@@ -52,7 +52,9 @@
 \fi
 
 %% List of figures와 List of tables를 Table of Contents에 추가
-\usepackage[nottoc]{tocbibind}
+%\usepackage[nottoc]{tocbibind}
+%% Table of contents, List of figures, List of tables를 Table of Contents에 추가
+\usepackage{tocbibind}
 
 %% 편집용지 설정 - 좀 바꿔야 할 듯 나중에
 %\usepackage[left = 25mm ,       right = 15mm,
@@ -69,7 +71,7 @@
 
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
-\RequirePackage{amsmath,amssymb,textcomp}
+\RequirePackage{amsmath,amssymb,textcomp,bm}
 \RequirePackage[cjk]{kotex}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
@@ -256,6 +258,7 @@
 % @command 본문 추가
 \newcommand{\addContents}[1]{
   \input{#1}
+
   \addevenpage
 }
 
