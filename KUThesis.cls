@@ -33,7 +33,7 @@
 \DeclareOption{fleqn}  {\PassOptionsToClass{fleqn}  {report}}
 \DeclareOption{openbib}{\PassOptionsToClass{openbib}{report}}
 
-\ExecuteOptions{doctor,draft,twoside}       % doctor,draft,twoside가 기본값
+\ExecuteOptions{doctor,draft,twosides}       % doctor,draft,twoside가 기본값
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
@@ -111,6 +111,7 @@
   \pagenumbering{arabic}
   \setcounter{page}{1}
 }
+
 \AtEndDocument{                             % \end{document}와 함께 실행
   \bibliographystyle{apsrev4-1}
 % \bibliographystyle{IEEEtranN}
@@ -305,6 +306,8 @@
     \ifoddpage
       \emptypage
     \fi
+  \else
+    \newpage
   \fi
 }
 
@@ -431,8 +434,8 @@
 \newcommand{\makeabstract}[1]{%
   \newpage
   \thispagestyle{empty} \noindent
-  \pagenumbering{gobble}
   \addcontentsline{toc}{chapter}{Abstract}
+  \pagenumbering{gobble}
   \vspace*{\fill}
   \begin{center}
     \fontsize{16pt}{16pt}\selectfont{\bf Abstract}
@@ -462,8 +465,8 @@
 \newcommand{\makeacknowledgement}[1]{%
   \newpage
   \thispagestyle{empty} \noindent
-  \pagenumbering{gobble}
   \addcontentsline{toc}{chapter}{Acknowledgement}
+  \pagenumbering{gobble}
   \begin{center}
     \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
   \end{center}
