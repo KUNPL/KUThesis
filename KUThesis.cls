@@ -38,7 +38,7 @@
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
 \if@isTwosides
-  \LoadClass[11pt,onecolumn,twosides]{report}
+  \LoadClass[11pt,onecolumn,twoside]{report}
 \else
   \LoadClass[11pt,onecolumn,oneside]{report}
 \fi
@@ -55,9 +55,10 @@
 \usepackage[nottoc]{tocbibind}
 
 %% 편집용지 설정 - 좀 바꿔야 할 듯 나중에
-\usepackage[left = 25mm ,       right = 15mm,
-             top = 30mm,       bottom = 30mm,
-      paperwidth = 182mm, paperheight = 257mm]{geometry}
+%\usepackage[left = 25mm ,       right = 15mm,
+\usepackage[inner = 25mm ,       outer = 15mm,
+              top = 30mm,       bottom = 30mm,
+       paperwidth = 182mm, paperheight = 257mm]{geometry}
 
 %% 줄간격 설정
 \linespread{1.3}
