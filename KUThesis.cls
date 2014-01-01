@@ -372,7 +372,7 @@
         \\[30mm]
         \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
         \\[30mm]
-        \fontsize{\@univSize}{\@univSize}\selectfont{\bf 高\ 麗\ 大\ 學\ 交\ 大\ 學\ 院}
+        \fontsize{\@univSize}{\@univSize}\selectfont{\bf 高\ 麗\ 大\ 學\ 校\ 大\ 學\ 院}
         \\[5mm]
         \fontsize{16pt}{16pt}\selectfont{\bf \@deptNameChn}
         \\[10mm]
