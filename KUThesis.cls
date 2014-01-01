@@ -1,12 +1,12 @@
 % -*- TeX:UTF-8 -*-
-%% KU Thesis Template for LaTeX
+%% 고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%       Author: Genie Jhang ( geniejhang@majimak.com )
-%%         Date: 2013. 08. 11
+%%        작성자: 장 진희 ( geniejhang@majimak.com )
+%%          날짜: 2013. 08. 11
 %%
-%% Requirements: TeXLive + ko.TeX
+%% 필요한 패키지: TeXLive + ko.TeX
 %%
-%%    Reference: KAIST Thesis Templete for LaTeX version 0.4
+%%      참고자료: KAIST Thesis Templete for LaTeX version 0.4
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{KUThesis}
@@ -69,6 +69,7 @@
 
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
+\RequirePackage{amsmath,amssymb,textcomp}
 \RequirePackage[cjk]{kotex}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
