@@ -33,7 +33,7 @@
 \DeclareOption{fleqn}  {\PassOptionsToClass{fleqn}  {report}}
 \DeclareOption{openbib}{\PassOptionsToClass{openbib}{report}}
 
-\ExecuteOptions{doctor,draft}         % doctor,draft가 기본값
+\ExecuteOptions{doctor,draft,twoside}       % doctor,draft,twoside가 기본값
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
@@ -116,7 +116,10 @@
   \bibliography{library.bib}
   \addevenpage
 
-  \makeacknowledgement
+  \if@isDraft
+  \else
+    \makeacknowledgement
+  \fi
 }
 
 %% 고려대학교 공식 영문명칭
@@ -237,27 +240,14 @@
 }
 \@onlypreamble{\submitDate}
 
-% @command abstract 초록
-\newcommand{\abstractContents}[1]{
-  \newcommand{\@abstractContents}{#1}
-}
-\@onlypreamble{\abstractContents}
-
 % @command 본문 추가
 \newcommand{\addContents}[1]{
   \input{#1}
-
   \addevenpage
 }
 
-% @command acknowledge 감사의 글
-\newcommand{\acknowledgementContents}[1]{
-  \newcommand{\@acknowledgementContents}{#1}
-}
-\@onlypreamble{\acknowledgementContents}
-
 %%
-%% 필요한 정보 중에 누락된 것이 없는지 점검 --> 제작중. 아직 불완전.
+%% 필요한 정보 중에 누락된 것이 없는지 점검
 %%
 \newcommand{\checkparameters}{%
     \@ifundefined{@titleEng}{%
@@ -437,7 +427,7 @@
   \end{center}
 
   \setlength\parindent{5mm}
-  \fontsize{11pt}{11pt}\selectfont{\indent\@abstractContents}
+  \fontsize{11pt}{11pt}\selectfont{\indent\input{abstract}}
   \vspace*{\fill}
   \addevenpage
 }
@@ -468,6 +458,6 @@
 
   \linespread{1.3}
   \setlength\parindent{5mm}
-  \fontsize{11pt}{11pt}\selectfont{\indent\@acknowledgementContents}
+  \fontsize{11pt}{11pt}\selectfont{\indent\input{acknowledgement}}
   \addevenpage
 }
