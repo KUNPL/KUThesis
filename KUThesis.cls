@@ -384,9 +384,6 @@
     \addevenpage
 }
 
-%\usepackage{soul}
-%\sodef\spaceout{}{0pt plus 1fil}{.4em plus 1fil}{0pt}
-
 %%
 %% 학위논문 심사완료 검인서 생성
 %%
