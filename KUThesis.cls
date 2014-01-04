@@ -1,6 +1,8 @@
 % -*- TeX:UTF-8 -*-
 %% 고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
+%%          버전: 1.07 Beta
+%%
 %%        작성자: 장 진희 ( geniejhang@majimak.com )
 %%          날짜: 2013. 08. 11
 %%
@@ -43,9 +45,6 @@
   \LoadClass[11pt,onecolumn,oneside]{report}
 \fi
 
-%% bibliography
-\usepackage[square,comma,numbers,sort&compress]{natbib}
-
 %% 여백 체크용 디버그 옵션
 \if@isDebug
   \usepackage[a4,frame,center]{crop}
@@ -55,7 +54,6 @@
 \usepackage{tocbibind}
 
 %% 편집용지 설정 - 좀 바꿔야 할 듯 나중에
-%\usepackage[left = 25mm ,       right = 15mm,
 \usepackage[inner = 25mm ,       outer = 15mm,
               top = 30mm,       bottom = 30mm,
        paperwidth = 182mm, paperheight = 257mm]{geometry}
@@ -66,6 +64,9 @@
 %% 들여쓰기
 \usepackage{indentfirst}
 \setlength\parindent{0em}
+
+%% bibliography
+\usepackage[square,comma,numbers,sort&compress]{natbib}
 
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
@@ -88,7 +89,7 @@
    ]{hyperref}
 \fi
 
-\AtBeginDocument{%                           % \begin{document}와 함께 실행
+\AtBeginDocument{%                         % \begin{document}와 함께 실행
   \checkparameters                         % 문서 변수가 올바른지 점검
   \newgeometry{       left = 40mm,
                      right = 30mm,
@@ -226,15 +227,6 @@
     \newcommand{\@approvalDay}{#3}
 }
 \@onlypreamble{\approvaldate}
-
-% @command refereedate 심사위원논문심사일
-% @param year,month,day 연,월,일 순으로 입력
-\newcommand{\refereedate}[3] {%
-    \newcommand{\@refereeYear}{#1}
-    \newcommand{\@refereeMonth}{#2}
-    \newcommand{\@refereeDay}{#3}
-}
-\@onlypreamble{\refereedate}
 
 % @command gradyear 졸업년도
 \newcommand{\graduateDate}[2]{
@@ -469,7 +461,6 @@
     \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
   \end{center}
 
-  \linespread{1.3}
   \setlength\parindent{5mm}
   \fontsize{11pt}{11pt}\selectfont{\indent\input{acknowledgement}}
   \setlength\parindent{0mm}
