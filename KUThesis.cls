@@ -72,7 +72,7 @@
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
 \RequirePackage{amsmath,amssymb,textcomp,bm}
-\RequirePackage[pagewise]{lineno}
+\RequirePackage{lineno}
 \RequirePackage[cjk]{kotex}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
@@ -384,8 +384,8 @@
     \addevenpage
 }
 
-\usepackage{soul}
-\sodef\spaceout{}{0pt plus 1fil}{.4em plus 1fil}{0pt}
+%\usepackage{soul}
+%\sodef\spaceout{}{0pt plus 1fil}{.4em plus 1fil}{0pt}
 
 %%
 %% 학위논문 심사완료 검인서 생성
