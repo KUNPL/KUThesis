@@ -51,8 +51,6 @@
   \usepackage[a4,frame,center]{crop}
 \fi
 
-%% List of figures와 List of tables를 Table of Contents에 추가
-%\usepackage[nottoc]{tocbibind}
 %% Table of contents, List of figures, List of tables를 Table of Contents에 추가
 \usepackage{tocbibind}
 
@@ -103,6 +101,12 @@
   \if@isDraft                              % final 옵션이 지정되어 있으면
     \linenumbers
   \else
+    \newgeometry{       left = 40mm,
+                       right = 30mm,
+                         top = 40mm,
+                      bottom = 30mm,
+                  paperwidth = 182mm,
+                 paperheight = 257mm}        % 여백 다른 페이지용 여백
     \makeapproval                          % 제출승인서, 심사완료검인 생성
   \fi 
   \restoregeometry                         % 여백 되돌림
@@ -130,16 +134,6 @@
 
 %% 고려대학교 공식 영문명칭
 \newcommand{\@koreauniv}{Korea University}
-
-%% pagestyle 
-%\def\ps@koreauniv{\let\@mkboth\@gobbletwo
-%     \let\@oddhead\@empty
-%     \def\@oddfoot{\reset@font\hfil--\ \thepage\ --
-%     \hfil}%
-%     \let\@evenhead\@empty\let\@evenfoot\@oddfoot
-%}
-
-%\pagestyle{koreauniv}
 
 % @command title 논문 제목
 \renewcommand{\title}[2] {
@@ -394,7 +388,6 @@
   \newpage
   \thispagestyle{empty}
   \renewcommand{\baselinestretch}{1.3}
-  \\[10mm]
   \begin{minipage}[t][20mm][t]{112mm}
     \begin{center}
       \fontsize{15.5pt}{15.5pt}\selectfont{\bf \@authorChn의 物理學 \@degreeChn士學位論文 審査를 完了함}
@@ -435,7 +428,7 @@
 %%
 %% 초록 페이지 생성
 %%
-\newcommand{\makeabstract}[1]{%
+\newcommand{\makeabstract}{%
   \newpage
   \thispagestyle{empty}
   \addcontentsline{toc}{chapter}{Abstract}
@@ -467,7 +460,7 @@
 %%
 %% 감사의 글 페이지 생성
 %%
-\newcommand{\makeacknowledgement}[1]{%
+\newcommand{\makeacknowledgement}{%
   \newpage
   \thispagestyle{empty}
   \addcontentsline{toc}{chapter}{Acknowledgement}
