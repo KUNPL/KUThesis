@@ -72,6 +72,7 @@
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
 \RequirePackage{amsmath,amssymb,textcomp,bm}
+\RequirePackage[pagewise]{lineno}
 \RequirePackage[cjk]{kotex}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
@@ -436,6 +437,9 @@
 %%
 \newcommand{\makeabstract}[1]{%
   \newpage
+  \if@isDraft
+    \linenumbers
+  \fi
   \thispagestyle{empty} \noindent
   \addcontentsline{toc}{chapter}{Abstract}
   \pagenumbering{gobble}
