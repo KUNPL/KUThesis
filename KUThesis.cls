@@ -67,7 +67,7 @@
 
 %% 들여쓰기
 \usepackage{indentfirst}
-\setlength\parindent{2.0em}
+\setlength\parindent{0em}
 
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
@@ -101,6 +101,7 @@
   \makefrontcover                          % 앞표지 생성
   \maketitle                               % 속표지 생성
   \if@isDraft                              % final 옵션이 지정되어 있으면
+    \linenumbers
   \else
     \makeapproval                          % 제출승인서, 심사완료검인 생성
   \fi 
@@ -258,7 +259,9 @@
 
 % @command 본문 추가
 \newcommand{\addContents}[1]{
+  \setlength\parindent{5mm}
   \input{#1}
+  \setlength\parindent{0mm}
 
   \addevenpage
 }
@@ -297,7 +300,7 @@
 \newcommand{\emptypage}{
   \newpage
   \thispagestyle{empty}
-  \mbox{ }
+  \hbox{}
   \newpage
 }
 
@@ -321,17 +324,17 @@
 \newcommand{\makefrontcover}{%
     \newpage
     \renewcommand{\baselinestretch}{1.3}%
-    \thispagestyle{empty} \noindent%
+    \thispagestyle{empty}
     \begin{minipage}[t][12mm][t]{112mm}
         \begin{center}
             \fontsize{16pt}{16pt}\selectfont\bf{Thesis for the Degree\\of \@degreeEng}
         \end{center}
-    \end{minipage}\\[30mm] \noindent
+    \end{minipage}\\[30mm]
     \hspace*{-15mm}\begin{minipage}[t][50mm][t]{142mm}
         \begin{center}
             \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleEng}
         \end{center}
-    \end{minipage}\vfill \noindent
+    \end{minipage}\vfill
     \begin{minipage}[b][85mm][b]{112mm}
         \begin{center}
             \fontsize{16pt}{16pt}\selectfont{\bf by}
@@ -357,7 +360,7 @@
 \renewcommand{\maketitle}{%
     \newpage
     \renewcommand{\baselinestretch}{1.3}%
-    \thispagestyle{empty} \noindent
+    \thispagestyle{empty}
     \hspace*{-15mm}\begin{minipage}[t][16pt][t]{142mm}
       \begin{center}
         \fontsize{16pt}{16pt}\selectfont\bf{\@advisorMajorChn\ 敎授指導}
@@ -366,7 +369,7 @@
         \\[30mm]
         \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleEng}
       \end{center}
-    \end{minipage}\vfill \noindent
+    \end{minipage}\vfill
     \begin{minipage}[b][110mm][b]{112mm}
       \begin{center}
         \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 物理學 \@degreeChn士學位 論文으로 提出함}
@@ -389,7 +392,7 @@
 %%
 \newcommand{\makeapproval}{%
   \newpage
-  \thispagestyle{empty} \noindent%
+  \thispagestyle{empty}
   \renewcommand{\baselinestretch}{1.3}
   \\[10mm]
   \begin{minipage}[t][20mm][t]{112mm}
@@ -434,10 +437,7 @@
 %%
 \newcommand{\makeabstract}[1]{%
   \newpage
-  \if@isDraft
-    \linenumbers
-  \fi
-  \thispagestyle{empty} \noindent
+  \thispagestyle{empty}
   \addcontentsline{toc}{chapter}{Abstract}
   \pagenumbering{gobble}
   \vspace*{\fill}
@@ -447,6 +447,7 @@
 
   \setlength\parindent{5mm}
   \fontsize{11pt}{11pt}\selectfont{\indent\input{abstract}}
+  \setlength\parindent{0mm}
   \vspace*{\fill}
   \addevenpage
 }
@@ -468,7 +469,7 @@
 %%
 \newcommand{\makeacknowledgement}[1]{%
   \newpage
-  \thispagestyle{empty} \noindent
+  \thispagestyle{empty}
   \addcontentsline{toc}{chapter}{Acknowledgement}
   \pagenumbering{gobble}
   \begin{center}
@@ -478,5 +479,6 @@
   \linespread{1.3}
   \setlength\parindent{5mm}
   \fontsize{11pt}{11pt}\selectfont{\indent\input{acknowledgement}}
+  \setlength\parindent{0mm}
   \addevenpage
 }
