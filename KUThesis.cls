@@ -1,14 +1,22 @@
 % -*- TeX:UTF-8 -*-
-%% 고려대학교 석·박사 학위논문 LaTeX 템플릿
+%%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%          버전: 1.07 Beta
+%%           버전: 1.07 Beta
 %%
-%%        작성자: 장 진희 ( geniejhang@majimak.com )
-%%          날짜: 2013. 08. 11
+%%         작성자: 장 진희 ( geniejhang@majimak.com )
+%%           날짜: 2013. 08. 11
 %%
-%% 필요한 패키지: TeXLive + ko.TeX
+%%  필요한 패키지: TeXLive + ko.TeX
 %%
-%%      참고자료: KAIST Thesis Templete for LaTeX version 0.4
+%%       참고자료: KAIST Thesis Templete for LaTeX version 0.4
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  여러분의 참여가 이 템플릿을 더욱 완벽하게 만들 수 있습니다. 
+%%
+%%          https://github.com/geniejhang/KUThesis
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{KUThesis}
