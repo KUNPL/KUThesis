@@ -5,6 +5,8 @@ Thumbs.db
 .LSOverride
 *.swp
 *.bak
+*.orig
+._*
 
 # output
 *.aux
