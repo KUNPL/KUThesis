@@ -24,7 +24,7 @@
 %% 옵션 선언을 위한 변수 선언
 \newif\if@isDoctor
 \newif\if@isDraft
-\newif\if@pdfdoc
+\newif\if@isPdfdoc
 \newif\if@isDebug
 \newif\if@isTwosides
 
@@ -33,7 +33,7 @@
 \DeclareOption{master}       {\@isDoctorfalse}
 \DeclareOption{final}        {\@isDraftfalse}
 \DeclareOption{draft}        {\@isDrafttrue}
-\DeclareOption{pdfdoc}       {\@pdfdoctrue}
+\DeclareOption{pdfdoc}       {\@isPdfdoctrue}
 \DeclareOption{debug}        {\@isDebugtrue}
 \DeclareOption{twosides}     {\@isTwosidestrue}
 \DeclareOption{oneside}      {\@isTwosidesfalse}
@@ -80,31 +80,27 @@
 \RequirePackage{graphicx,xcolor}
 \RequirePackage{amsmath,amssymb,textcomp,bm}
 \RequirePackage[pagewise]{lineno}
+\RequirePackage{fix-cm}
 \RequirePackage[cjk]{kotex}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
-\if@pdfdoc
+\if@isPdfdoc
   \RequirePackage[unicode,%
-      pdftex=true,%
-      bookmarks=true,%
-     colorlinks=true,%
-   ]{hyperref}
+       pageanchor=false,%
+           pdftex=true,%
+        bookmarks=true,%
+       colorlinks=true%
+    ]{hyperref}
 \else
-  \RequirePackage[unicode,%
-      pdftex=true,%
-      bookmarks=false,%
-     colorlinks=false,%
-   ]{hyperref}
 \fi
 
+\newcounter{dummy}
 \AtBeginDocument{%                         % \begin{document}와 함께 실행
   \checkparameters                         % 문서 변수가 올바른지 점검
   \newgeometry{       left = 40mm,
                      right = 30mm,
                        top = 30mm,
-                    bottom = 30mm,
-                paperwidth = 182mm,
-               paperheight = 257mm}        % 여백 다른 페이지용 여백
+                    bottom = 30mm}        % 여백 다른 페이지용 여백
   \makefrontcover                          % 앞표지 생성
   \maketitle                               % 속표지 생성
   \if@isDraft                              % final 옵션이 지정되어 있으면
@@ -113,12 +109,11 @@
     \newgeometry{       left = 40mm,
                        right = 30mm,
                          top = 40mm,
-                      bottom = 30mm,
-                  paperwidth = 182mm,
-                 paperheight = 257mm}        % 여백 다른 페이지용 여백
+                      bottom = 30mm}        % 여백 다른 페이지용 여백
     \makeapproval                          % 제출승인서, 심사완료검인 생성
   \fi 
   \restoregeometry                         % 여백 되돌림
+  \refstepcounter{dummy}
   \makeabstract                            % 초록 페이지 생성
 
   \pagenumbering{roman}
@@ -137,6 +132,7 @@
 
   \if@isDraft
   \else
+    \refstepcounter{dummy}
     \makeacknowledgement
   \fi
 }
