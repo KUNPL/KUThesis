@@ -1,7 +1,7 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.07
+%%           버전: 1.08
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
@@ -23,7 +23,7 @@
 
 %% 옵션 선언을 위한 변수 선언
 \newif\if@isDoctor
-\newif\if@isDraft
+\newif\if@isFinal
 \newif\if@isPdfdoc
 \newif\if@isDebug
 \newif\if@isTwosides
@@ -31,8 +31,7 @@
 %% 새 옵션 모음 - doctor|master, final|draft
 \DeclareOption{doctor}       {\@isDoctortrue}
 \DeclareOption{master}       {\@isDoctorfalse}
-\DeclareOption{final}        {\@isDraftfalse}
-\DeclareOption{draft}        {\@isDrafttrue}
+\DeclareOption{final}        {\@isFinaltrue}
 \DeclareOption{pdfdoc}       {\@isPdfdoctrue}
 \DeclareOption{debug}        {\@isDebugtrue}
 \DeclareOption{twosides}     {\@isTwosidestrue}
@@ -43,7 +42,10 @@
 \DeclareOption{fleqn}  {\PassOptionsToClass{fleqn}  {report}}
 \DeclareOption{openbib}{\PassOptionsToClass{openbib}{report}}
 
-\ExecuteOptions{doctor,draft,twosides}       % doctor,draft,twoside가 기본값
+%% doctor,draft,twoside가 기본값
+\@isDoctortrue
+\@isFinalfalse
+\@isTwosidestrue
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
@@ -103,14 +105,14 @@
                     bottom = 30mm}        % 여백 다른 페이지용 여백
   \makefrontcover                          % 앞표지 생성
   \maketitle                               % 속표지 생성
-  \if@isDraft                              % final 옵션이 지정되어 있으면
-    \linenumbers
-  \else
+  \if@isFinal                              % final 옵션이 지정되어 있으면
     \newgeometry{       left = 40mm,
                        right = 30mm,
                          top = 40mm,
                       bottom = 30mm}        % 여백 다른 페이지용 여백
     \makeapproval                          % 제출승인서, 심사완료검인 생성
+  \else
+    \linenumbers
   \fi 
   \restoregeometry                         % 여백 되돌림
   \refstepcounter{dummy}
@@ -130,8 +132,7 @@
   \bibliography{library.bib}
   \addevenpage
 
-  \if@isDraft
-  \else
+  \if@isFinal
     \refstepcounter{dummy}
     \makeacknowledgement
   \fi
