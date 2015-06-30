@@ -1,7 +1,7 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.08
+%%           버전: 1.09
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
@@ -211,6 +211,12 @@
     \ifthenelse{\equal{#1}{PH}}
         {\newcommand{\@deptNameEng}{Physics}
          \newcommand{\@deptNameChn}{物\ 理\ 學\ 科}} {}
+    \ifthenelse{\equal{#1}{CRCE}}
+        {\newcommand{\@deptNameEng}{Computer and Radio Communications Engineering}
+         \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ $\cdot$\ 電\ 波\ 通\ 信\ 工\ 學\ 科}} {}
+    \ifthenelse{\equal{#1}{CSE}}
+        {\newcommand{\@deptNameEng}{Computer Science Engineering}
+         \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ 學\ 科}} {}
 }
 \@onlypreamble{\department}
 
@@ -452,6 +458,7 @@
   \addevenpage
   \listoftables
   \addevenpage
+  \clearpage
 }
 
 %%
