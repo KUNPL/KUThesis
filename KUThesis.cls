@@ -1,7 +1,7 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.09
+%%           버전: 1.10
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
@@ -27,6 +27,7 @@
 \newif\if@isPdfdoc
 \newif\if@isDebug
 \newif\if@isTwosides
+\newif\if@isLongDeptName
 
 %% 새 옵션 모음 - doctor|master, final|draft
 \DeclareOption{doctor}       {\@isDoctortrue}
@@ -46,6 +47,7 @@
 \@isDoctortrue
 \@isFinalfalse
 \@isTwosidestrue
+\@isLongDeptNamefalse
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
@@ -210,13 +212,17 @@
 \newcommand{\department}[2] {%
     \ifthenelse{\equal{#1}{PH}}
         {\newcommand{\@deptNameEng}{Physics}
-         \newcommand{\@deptNameChn}{物\ 理\ 學\ 科}} {}
+         \newcommand{\@deptNameChn}{物\ 理\ 學\ 科}
+         \newcommand{\@deptNameShort}{物理學}} {}
     \ifthenelse{\equal{#1}{CRCE}}
         {\newcommand{\@deptNameEng}{Computer and Radio Communications Engineering}
-         \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ $\cdot$\ 電\ 波\ 通\ 信\ 工\ 學\ 科}} {}
+         \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ $\cdot$\ 電\ 波\ 通\ 信\ 工\ 學\ 科}
+         \newcommand{\@deptNameShort}{컴퓨터$\cdot$電波通信工學}
+         \@isLongDeptNametrue} {}
     \ifthenelse{\equal{#1}{CSE}}
         {\newcommand{\@deptNameEng}{Computer Science Engineering}
-         \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ 學\ 科}} {}
+         \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ 學\ 科}
+         \newcommand{\@deptNameShort}{컴퓨터學}} {}
 }
 \@onlypreamble{\department}
 
@@ -339,7 +345,11 @@
             \fontsize{16pt}{16pt}\selectfont{\bf \@authorEng}
             \\[5mm]
             \fontsize{16pt}{16pt}\selectfont{\bf Department of \@deptNameEng}
-            \\[15mm]
+            \if@isLongDeptName
+              \\[8mm]
+            \else
+              \\[15mm]
+            \fi
             \fontsize{18pt}{18pt}\selectfont{\bf Graduate School}
             \\[5mm]
             \fontsize{\@univSize}{\@univSize}\selectfont{\bf \@koreauniv}
@@ -369,8 +379,14 @@
     \end{minipage}\vfill
     \begin{minipage}[b][110mm][b]{112mm}
       \begin{center}
-        \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 物理學 \@degreeChn士學位 論文으로 提出함}
-        \\[30mm]
+        \if@isLongDeptName
+          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@deptNameShort}\\
+          \fontsize{16pt}{16pt}\selectfont{\bf \@degreeChn士學位 論文으로 提出함}
+          \\[25mm]
+        \else
+          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@deptNameShort\ \@degreeChn士學位 論文으로 提出함}
+          \\[30mm]
+        \fi
         \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
         \\[30mm]
         \fontsize{\@univSize}{\@univSize}\selectfont{\bf 高\ 麗\ 大\ 學\ 校\ 大\ 學\ 院}
