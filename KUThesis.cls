@@ -1,7 +1,7 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.10
+%%           버전: 1.11
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
@@ -52,7 +52,7 @@
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
 \if@isTwosides
-  \LoadClass[11pt,onecolumn,twoside]{report}
+  \LoadClass[11pt,onecolumn,twosides]{report}
 \else
   \LoadClass[11pt,onecolumn,oneside]{report}
 \fi
