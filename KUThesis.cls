@@ -1,7 +1,7 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.11
+%%           버전: 1.12
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
@@ -52,7 +52,7 @@
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
 \if@isTwosides
-  \LoadClass[11pt,onecolumn,twosides]{report}
+  \LoadClass[11pt,onecolumn,twoside]{report}
 \else
   \LoadClass[11pt,onecolumn,oneside]{report}
 \fi
@@ -70,9 +70,6 @@
               top = 30mm,       bottom = 30mm,
        paperwidth = 182mm, paperheight = 257mm]{geometry}
 
-%% 줄간격 설정
-\linespread{1.3}
-
 %% 들여쓰기
 \usepackage{indentfirst}
 \setlength\parindent{0em}
@@ -86,6 +83,7 @@
 \RequirePackage[pagewise]{lineno}
 \RequirePackage{fix-cm}
 \RequirePackage[cjk]{kotex}
+\RequirePackage[nomessages]{fp}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
 \if@isPdfdoc
@@ -130,7 +128,6 @@
 
 \AtEndDocument{                             % \end{document}와 함께 실행
   \bibliographystyle{apsrev4-1}
-% \bibliographystyle{IEEEtranN}
   \bibliography{library.bib}
   \addevenpage
 
@@ -236,23 +233,14 @@
 }
 \@onlypreamble{\referee}
 
-% @command approvaldate 지도교수논문승인일
-% @param year,month,day 연,월,일 순으로 입력
-\newcommand{\approvaldate}[3] {%
-    \newcommand{\@approvalYear}{#1}
-    \newcommand{\@approvalMonth}{#2}
-    \newcommand{\@approvalDay}{#3}
-}
-\@onlypreamble{\approvaldate}
-
-% @command gradyear 졸업년도
+% @command graduateDate 졸업년월
 \newcommand{\graduateDate}[2]{
   \newcommand{\@graduateYear}{#1}
   \newcommand{\@graduateMonth}{#2}
 }
 \@onlypreamble{\graduateDate}
 
-% @command subdate 제출일자
+% @command submitDate 제출일자
 \newcommand{\submitDate}[3]{
   \newcommand{\@submitYear}{#1}
   \newcommand{\@submitMonth}{#2}
@@ -260,9 +248,42 @@
 }
 \@onlypreamble{\submitDate}
 
+% @command abstractLineSpacing 초록 줄간격
+\newcommand{\abstractLineSpacing}[1]{
+  \newcommand{\result}{#1}
+  \FPeval{\ratio}{\result/100/1.236} 
+  \newcommand{\@abstractLineRatio}{\ratio}
+}
+\@onlypreamble{\abstractLineSpacing}
+
+% @command TOCLineSpacing 목차 줄간격
+\newcommand{\TOCLineSpacing}[1]{
+  \renewcommand{\result}{#1}
+  \FPeval{\ratio}{\result/100/1.236} 
+  \newcommand{\@TOCLineRatio}{\ratio}
+}
+\@onlypreamble{\TOCLineSpacing}
+
+% @command contentLineSpacing 본문 줄간격
+\newcommand{\contentLineSpacing}[1]{
+  \renewcommand{\result}{#1}
+  \FPeval{\ratio}{\result/100/1.236} 
+  \newcommand{\@lineRatio}{\ratio}
+}
+\@onlypreamble{\contentLineSpacing}
+
+% @command acknowledgementLineSpacing 감사의글 줄간격
+\newcommand{\acknowledgementLineSpacing}[1]{
+  \renewcommand{\result}{#1}
+  \FPeval{\ratio}{\result/100/1.236} 
+  \newcommand{\@acknowledgementLineRatio}{\ratio}
+}
+\@onlypreamble{\acknowledgementLineSpacing}
+
 % @command 본문 추가
 \newcommand{\addContents}[1]{
   \setlength\parindent{5mm}
+  \renewcommand{\baselinestretch}{\@lineRatio}\selectfont
   \input{#1}
   \setlength\parindent{0mm}
 
@@ -458,7 +479,8 @@
   \end{center}
 
   \setlength\parindent{5mm}
-  \fontsize{11pt}{11pt}\selectfont{\indent\input{abstract}}
+  \renewcommand{\baselinestretch}{\@abstractLineRatio}\selectfont
+  \fontsize{11pt}{12pt}\selectfont{\indent\input{abstract}}
   \setlength\parindent{0mm}
   \vspace*{\fill}
   \addevenpage
@@ -468,6 +490,7 @@
 %% 목차 일괄 생성
 %%
 \newcommand{\makecontents}{%            % TOC, LOT, LOF 생성
+  \renewcommand{\baselinestretch}{\@TOCLineRatio}\selectfont
   \tableofcontents
   \addevenpage
   \listoffigures
@@ -490,7 +513,8 @@
   \end{center}
 
   \setlength\parindent{5mm}
-  \fontsize{11pt}{11pt}\selectfont{\indent\input{acknowledgement}}
+  \renewcommand{\baselinestretch}{\@acknowledgementLineRatio}\selectfont
+  \fontsize{11pt}{12pt}\selectfont{\indent\input{acknowledgement}}
   \setlength\parindent{0mm}
   \addevenpage
 }
