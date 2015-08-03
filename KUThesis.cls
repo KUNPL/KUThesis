@@ -1,7 +1,7 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.12
+%%           버전: 1.13
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
@@ -28,6 +28,9 @@
 \newif\if@isDebug
 \newif\if@isTwosides
 \newif\if@isLongDeptName
+\newif\if@isTOCHeader
+\newif\if@isContentHeader
+\newif\if@isBibHeader
 
 %% 새 옵션 모음 - doctor|master, final|draft
 \DeclareOption{doctor}       {\@isDoctortrue}
@@ -48,6 +51,9 @@
 \@isFinalfalse
 \@isTwosidestrue
 \@isLongDeptNamefalse
+\@isTOCHeaderfalse
+\@isContentHeaderfalse
+\@isBibHeaderfalse
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
@@ -84,6 +90,7 @@
 \RequirePackage{fix-cm}
 \RequirePackage[cjk]{kotex}
 \RequirePackage[nomessages]{fp}
+\RequirePackage{fancyhdr}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
 \if@isPdfdoc
@@ -280,9 +287,34 @@
 }
 \@onlypreamble{\acknowledgementLineSpacing}
 
+% @command addTOCHeader TOC, LOF, LIT에 헤더 추가
+\newcommand{\addTOCHeader} {
+  \@isTOCHeadertrue
+}
+\@onlypreamble{\addTOCHeader}
+
+% @command addContentHeader 본문에 헤더 추가
+\newcommand{\addContentHeader} {
+  \@isContentHeadertrue
+}
+\@onlypreamble{\addContentHeader}
+
+% @command addBibHeader 참고문헌에 헤더 추가
+\newcommand{\addBibHeader} {
+  \@isBibHeadertrue
+}
+\@onlypreamble{\addBibHeader}
+
 % @command 본문 추가
 \newcommand{\addContents}[1]{
   \setlength\parindent{5mm}
+  \if@isContentHeader
+    \pagestyle{fancy}
+    \fancyhf{}
+    \fancyhead[LE]{\nouppercase\leftmark}
+    \fancyhead[RO]{\nouppercase\rightmark}
+    \fancyfoot[CE,CO]{\thepage}
+  \fi
   \renewcommand{\baselinestretch}{\@lineRatio}\selectfont
   \input{#1}
   \setlength\parindent{0mm}
@@ -490,6 +522,13 @@
 %% 목차 일괄 생성
 %%
 \newcommand{\makecontents}{%            % TOC, LOT, LOF 생성
+  \if@isTOCHeader
+    \pagestyle{fancy}
+    \fancyhf{}
+    \fancyhead[LE]{\nouppercase\leftmark}
+    \fancyhead[RO]{\nouppercase\leftmark}
+    \fancyfoot[CE,CO]{\thepage}
+  \fi
   \renewcommand{\baselinestretch}{\@TOCLineRatio}\selectfont
   \tableofcontents
   \addevenpage
