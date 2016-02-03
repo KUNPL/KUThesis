@@ -46,3 +46,8 @@ thesis.tex 파일 내부에 설명이 잘 되어 있으니, 따로 설명이 필
 ====
 
 이 템플릿 파일을 사용해서 발생하는 모든 문제에 대해서 템플릿 작성자들은 어떠한 책임도 지지 않습니다.
+
+참고 자료
+=========
+
+http://library.korea.ac.kr/link/html/useThesesGuide03
