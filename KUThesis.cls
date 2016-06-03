@@ -1,7 +1,7 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.13
+%%           버전: 1.14
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
@@ -63,6 +63,7 @@
   \LoadClass[11pt,onecolumn,oneside]{report}
 \fi
 
+
 %% 여백 체크용 디버그 옵션
 \if@isDebug
   \usepackage[a4,frame,center]{crop}
@@ -80,8 +81,13 @@
 \usepackage{indentfirst}
 \setlength\parindent{0em}
 
+%% Figure와 Caption사이 거리 조정
+\setlength{\abovecaptionskip}{10pt} % 캡션 위 거리
+\setlength{\belowcaptionskip}{0pt}  % 캡션 아래 거리
+
 %% bibliography
-\usepackage[square,comma,numbers,sort&compress]{natbib}
+\usepackage[square,numbers]{natbib}
+\bibliographystyle{ieeetr}
 
 \RequirePackage{ifthen,changepage}       % 추가 패키지 설정
 \RequirePackage{graphicx,xcolor}
@@ -91,6 +97,12 @@
 \RequirePackage[cjk]{kotex}
 \RequirePackage[nomessages]{fp}
 \RequirePackage{fancyhdr}
+\RequirePackage{pdfpages}
+
+%% Caption의 줄간격 설정
+\RequirePackage{caption,setspace}
+\captionsetup[table]{font={stretch=\@captionLineSpacing}}
+\captionsetup[figure]{font={stretch=\@captionLineSpacing}}
 
 %% PDF 파일로 문서를 만들었을 때 링크 활성화
 \if@isPdfdoc
@@ -134,7 +146,6 @@
 }
 
 \AtEndDocument{                             % \end{document}와 함께 실행
-  \bibliographystyle{apsrev4-1}
   \bibliography{library.bib}
   \addevenpage
 
@@ -149,16 +160,21 @@
 
 % @command title 논문 제목
 \renewcommand{\title}[2] {
-  \ifnum#1=2
-    \newcommand{\@titleSize}{21pt}
+  \ifnum#1=3
+    \newcommand{\@titleSize}{19pt}
     \newcommand{\@univSize}{18pt}
   \else
-    \ifnum#1=0
-      \newcommand{\@titleSize}{30pt}
+    \ifnum#1=2
+      \newcommand{\@titleSize}{21pt}
+      \newcommand{\@univSize}{18pt}
     \else
-      \newcommand{\@titleSize}{28pt}
+      \ifnum#1=0
+        \newcommand{\@titleSize}{30pt}
+      \else
+        \newcommand{\@titleSize}{28pt}
+      \fi
+      \newcommand{\@univSize}{20pt}
     \fi
-    \newcommand{\@univSize}{20pt}
   \fi
   \newcommand{\@titleEng}{#2}
 }
@@ -257,35 +273,33 @@
 
 % @command abstractLineSpacing 초록 줄간격
 \newcommand{\abstractLineSpacing}[1]{
-  \newcommand{\result}{#1}
-  \FPeval{\ratio}{\result/100/1.236} 
-  \newcommand{\@abstractLineRatio}{\ratio}
+  \FPeval{\@abstractLineRatio}{#1/100.0/1.236} 
 }
 \@onlypreamble{\abstractLineSpacing}
 
 % @command TOCLineSpacing 목차 줄간격
 \newcommand{\TOCLineSpacing}[1]{
-  \renewcommand{\result}{#1}
-  \FPeval{\ratio}{\result/100/1.236} 
-  \newcommand{\@TOCLineRatio}{\ratio}
+  \FPeval{\@TOCLineRatio}{#1/100.0/1.236} 
 }
 \@onlypreamble{\TOCLineSpacing}
 
 % @command contentLineSpacing 본문 줄간격
 \newcommand{\contentLineSpacing}[1]{
-  \renewcommand{\result}{#1}
-  \FPeval{\ratio}{\result/100/1.236} 
-  \newcommand{\@lineRatio}{\ratio}
+  \FPeval{\@lineRatio}{#1/100.0/1.236} 
 }
 \@onlypreamble{\contentLineSpacing}
 
 % @command acknowledgementLineSpacing 감사의글 줄간격
 \newcommand{\acknowledgementLineSpacing}[1]{
-  \renewcommand{\result}{#1}
-  \FPeval{\ratio}{\result/100/1.236} 
-  \newcommand{\@acknowledgementLineRatio}{\ratio}
+  \FPeval{\@acknowledgementLineRatio}{#1/100.0/1.236} 
 }
 \@onlypreamble{\acknowledgementLineSpacing}
+
+% @command captionLineSpacing 캡션 줄간격
+\newcommand{\captionLineSpacing}[1]{
+  \FPeval{\@captionLineSpacing}{#1/100.0/1.236} 
+}
+\@onlypreamble{\captionLineSpacing}
 
 % @command addTOCHeader TOC, LOF, LIT에 헤더 추가
 \newcommand{\addTOCHeader} {
@@ -456,31 +470,26 @@
 %%
 %% 학위논문 심사완료 검인서 생성
 %%
+\newcommand{\approvalScan}[1]{%
+  \newcommand{\@scanFile}{#1}
+}
+
 \newcommand{\makeapproval}{%
-  \newpage
-  \thispagestyle{empty}
-  \renewcommand{\baselinestretch}{1.3}
-  \begin{minipage}[t][20mm][t]{112mm}
-    \begin{center}
-      \fontsize{15.5pt}{15.5pt}\selectfont{\bf \@authorChn의 物理學 \@degreeChn士學位論文 審査를 完了함}
-      \\[30mm]
-      \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
-      \\[20mm]
-      \underline{
-        \fontsize{16pt}{16pt}\selectfont{\bf 委員長}
-        \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
-      }
-      \\[10mm]
-      \underline{
-        \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
-        \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
-      }
-      \\[10mm]
-      \underline{
-        \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
-        \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
-      }
-      \if@isDoctor
+  \@ifundefined{@scanFile}
+  {
+    \newpage
+    \thispagestyle{empty}
+    \renewcommand{\baselinestretch}{1.3}
+    \begin{minipage}[t][20mm][t]{112mm}
+      \begin{center}
+        \fontsize{15.5pt}{15.5pt}\selectfont{\bf \@authorChn의 物理學 \@degreeChn士學位論文 審査를 完了함}
+        \\[30mm]
+        \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
+        \\[20mm]
+        \underline{
+          \fontsize{16pt}{16pt}\selectfont{\bf 委員長}
+          \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+        }
         \\[10mm]
         \underline{
           \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
@@ -491,10 +500,27 @@
           \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
           \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
         }
-      \else\fi
-    \end{center}
-  \end{minipage}
-  \addevenpage
+        \if@isDoctor
+          \\[10mm]
+          \underline{
+            \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
+            \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+          }
+          \\[10mm]
+          \underline{
+            \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
+            \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+          }
+        \else\fi
+      \end{center}
+    \end{minipage}
+    \addevenpage
+  }{
+    \includepdf{\@scanFile}
+    \if@isTwosides
+      \emptypage
+    \fi
+  }
 }
 
 %%
