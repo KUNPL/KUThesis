@@ -1,10 +1,11 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 1.14
+%%           버전: 2.00
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
+%%    마지막 갱신: 2016. 07. 04
 %%
 %%  필요한 패키지: TeXLive 2013 or later + ko.TeX
 %%
@@ -14,7 +15,7 @@
 %%
 %%  여러분의 참여가 이 템플릿을 더욱 완벽하게 만들 수 있습니다. 
 %%
-%%          https://github.com/geniejhang/KUThesis
+%%          https://github.com/KUNPL/KUThesis
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -31,6 +32,8 @@
 \newif\if@isTOCHeader
 \newif\if@isContentHeader
 \newif\if@isBibHeader
+\newif\if@isKrabst
+\newif\if@isKrack
 
 %% 새 옵션 모음 - doctor|master, final|draft
 \DeclareOption{doctor}       {\@isDoctortrue}
@@ -40,6 +43,8 @@
 \DeclareOption{debug}        {\@isDebugtrue}
 \DeclareOption{twosides}     {\@isTwosidestrue}
 \DeclareOption{oneside}      {\@isTwosidesfalse}
+\DeclareOption{krabst}       {\@isKrabsttrue}
+\DeclareOption{krack}        {\@isKracktrue}
 
 %% leqno,fleqn,openbib 옵션은 그대로 report 클래스에 전달
 \DeclareOption{leqno}  {\PassOptionsToClass{leqno}  {report}}
@@ -54,11 +59,13 @@
 \@isTOCHeaderfalse
 \@isContentHeaderfalse
 \@isBibHeaderfalse
+\@isKrabstfalse
+\@isKrackfalse
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
 \if@isTwosides
-  \LoadClass[11pt,onecolumn,twoside]{report}
+  \LoadClass[11pt,onecolumn,twoside,openright]{report}
 \else
   \LoadClass[11pt,onecolumn,oneside]{report}
 \fi
@@ -89,8 +96,11 @@
 \usepackage[square,numbers]{natbib}
 \bibliographystyle{ieeetr}
 
-\RequirePackage{ifthen,changepage}       % 추가 패키지 설정
+\RequirePackage{ifthen}       % 추가 패키지 설정
+\RequirePackage[strict]{changepage}
+\RequirePackage{emptypage}
 \RequirePackage{graphicx,xcolor}
+\RequirePackage[toc,page]{appendix}
 \RequirePackage{amsmath,amssymb,textcomp,bm}
 \RequirePackage[pagewise]{lineno}
 \RequirePackage{fix-cm}
@@ -98,6 +108,7 @@
 \RequirePackage[nomessages]{fp}
 \RequirePackage{fancyhdr}
 \RequirePackage{pdfpages}
+\RequirePackage{multirow}
 
 %% Caption의 줄간격 설정
 \RequirePackage{caption,setspace}
@@ -143,6 +154,8 @@
 
   \pagenumbering{arabic}
   \setcounter{page}{1}
+
+  \renewcommand{\arraystretch}{1.3}
 }
 
 \AtEndDocument{                             % \end{document}와 함께 실행
@@ -151,6 +164,9 @@
 
   \if@isFinal
     \refstepcounter{dummy}
+    \if@isKrabst
+      \makekrabstract
+    \fi
     \makeacknowledgement
   \fi
 }
@@ -159,7 +175,7 @@
 \newcommand{\@koreauniv}{Korea University}
 
 % @command title 논문 제목
-\renewcommand{\title}[2] {
+\renewcommand{\title}[3] {
   \ifnum#1=3
     \newcommand{\@titleSize}{19pt}
     \newcommand{\@univSize}{18pt}
@@ -177,6 +193,7 @@
     \fi
   \fi
   \newcommand{\@titleEng}{#2}
+  \newcommand{\@titleKor}{#3}
 }
 \@onlypreamble{\title}
 
@@ -207,15 +224,20 @@
          }{
            \newcommand{\@authorEng}{#3\ #4\ #2}
          }}{}%
+    \ifthenelse{\equal{#1}{korean}}
+        {\newcommand{\@authorKor}{#2}
+         }{}%
 }
 \@onlypreamble{\author}
 
+% 현재는 주 지도교수만 지원
 % @command advisor 지도교수 이름 (복수가능)
 % @options [default: major]
 % - major: 주 지도교수  | coopr: 부 지도교수 (공동지도교수 경우)
-\newcommand{\advisor}[2]{%
-  \newcommand{\@advisorMajorChn}{#1}  % 영문이름 저장
-  \newcommand{\@advisorMajorEng}{#2}  % 영문이름 저장
+\newcommand{\advisor}[3]{%
+  \newcommand{\@advisorMajorKor}{#1}  % 한글이름 저장
+  \newcommand{\@advisorMajorChn}{#2}  % 영문이름 저장
+  \newcommand{\@advisorMajorEng}{#3}  % 영문이름 저장
 }
 \@onlypreamble{\advisor}
 
@@ -233,16 +255,22 @@
     \ifthenelse{\equal{#1}{PH}}
         {\newcommand{\@deptNameEng}{Physics}
          \newcommand{\@deptNameChn}{物\ 理\ 學\ 科}
-         \newcommand{\@deptNameShort}{物理學}} {}
+         \newcommand{\@deptNameKor}{물리학과}
+         \newcommand{\@deptNameShort}{物理學}
+         \newcommand{\@degreeName}{理學}} {}
     \ifthenelse{\equal{#1}{CRCE}}
         {\newcommand{\@deptNameEng}{Computer and Radio Communications Engineering}
          \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ $\cdot$\ 電\ 波\ 通\ 信\ 工\ 學\ 科}
+         \newcommand{\@deptNameKor}{컴퓨터$\cdot$전파통신공학과}
          \newcommand{\@deptNameShort}{컴퓨터$\cdot$電波通信工學}
+         \newcommand{\@degreeName}{컴퓨터$\cdot$電波通信工學}
          \@isLongDeptNametrue} {}
     \ifthenelse{\equal{#1}{CSE}}
         {\newcommand{\@deptNameEng}{Computer Science Engineering}
          \newcommand{\@deptNameChn}{컴\ 퓨\ 터\ 學\ 科}
-         \newcommand{\@deptNameShort}{컴퓨터學}} {}
+         \newcommand{\@deptNameKor}{컴퓨터학과}
+         \newcommand{\@deptNameShort}{컴퓨터學}
+         \newcommand{\@degreeName}{컴퓨터學}} {}
 }
 \@onlypreamble{\department}
 
@@ -276,6 +304,12 @@
   \FPeval{\@abstractLineRatio}{#1/100.0/1.236} 
 }
 \@onlypreamble{\abstractLineSpacing}
+
+% @command krAbstractLineSpacing 국문초록 줄간격
+\newcommand{\krAbstractLineSpacing}[1]{
+  \FPeval{\@krAbstractLineRatio}{#1/100.0/1.236} 
+}
+\@onlypreamble{\krAbstractLineSpacing}
 
 % @command TOCLineSpacing 목차 줄간격
 \newcommand{\TOCLineSpacing}[1]{
@@ -329,11 +363,9 @@
     \fancyhead[RO]{\nouppercase\rightmark}
     \fancyfoot[CE,CO]{\thepage}
   \fi
-  \renewcommand{\baselinestretch}{\@lineRatio}\selectfont
-  \input{#1}
+  \renewcommand{\baselinestretch}{\@lineRatio}
+  \selectfont{\input{#1}}
   \setlength\parindent{0mm}
-
-  \addevenpage
 }
 
 %%
@@ -341,15 +373,21 @@
 %%
 \newcommand{\checkparameters}{%
     \@ifundefined{@titleEng}{%
-        \ClassError{KUThesis}{The english title is not found}{}}{}
+        \ClassError{KUThesis}{The English title is not found}{}}{}
+    \@ifundefined{@titleKor}{%
+        \ClassError{KUThesis}{The English title is not found}{}}{}
+    \@ifundefined{@authorKor}{%
+        \ClassError{KUThesis}{The Korean name of the author is not found}{}}{}
     \@ifundefined{@authorChn}{%
-        \ClassError{KUThesis}{The chinese name of the author is not found}{}}{}
+        \ClassError{KUThesis}{The Chinese name of the author is not found}{}}{}
     \@ifundefined{@authorEng}{%
-        \ClassError{KUThesis}{The english name of the author is not found}{}}{}
+        \ClassError{KUThesis}{The English name of the author is not found}{}}{}
+    \@ifundefined{@advisorMajorKor}{%
+        \ClassError{KUThesis}{The Korean name of the major advisor is not found}{}}{}
     \@ifundefined{@advisorMajorEng}{%
-        \ClassError{KUThesis}{The english name of the major advisor is not found}{}}{}
+        \ClassError{KUThesis}{The English name of the major advisor is not found}{}}{}
     \@ifundefined{@advisorMajorChn}{%
-        \ClassError{KUThesis}{The chinese name of the major advisor is not found}{}}{}
+        \ClassError{KUThesis}{The Chinese name of the major advisor is not found}{}}{}
 }
 
 %%
@@ -370,7 +408,7 @@
 \newcommand{\emptypage}{
   \newpage
   \thispagestyle{empty}
-  \hbox{}
+  \hbox{ }
   \newpage
 }
 
@@ -447,11 +485,11 @@
     \begin{minipage}[b][110mm][b]{112mm}
       \begin{center}
         \if@isLongDeptName
-          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@deptNameShort}\\
+          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@degreeName}\\
           \fontsize{16pt}{16pt}\selectfont{\bf \@degreeChn士學位 論文으로 提出함}
           \\[25mm]
         \else
-          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@deptNameShort\ \@degreeChn士學位 論文으로 提出함}
+          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@degreeName{ }\@degreeChn士學位 論文으로 提出함}
           \\[30mm]
         \fi
         \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
@@ -482,7 +520,7 @@
     \renewcommand{\baselinestretch}{1.3}
     \begin{minipage}[t][20mm][t]{112mm}
       \begin{center}
-        \fontsize{15.5pt}{15.5pt}\selectfont{\bf \@authorChn의 物理學 \@degreeChn士學位論文 審査를 完了함}
+        \fontsize{15.5pt}{15.5pt}\selectfont{\bf \@authorChn의 \@degreeName{ }\@degreeChn士學位論文 審査를 完了함}
         \\[30mm]
         \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
         \\[20mm]
@@ -545,6 +583,34 @@
 }
 
 %%
+%% 한국어 초록 페이지 생성
+%%
+\newcommand{\makekrabstract}{%
+  \newpage
+  \thispagestyle{empty}
+  \addcontentsline{toc}{chapter}{국문초록}
+  \pagenumbering{gobble}
+  \begin{center}
+    \fontsize{16pt}{16pt}\selectfont{\bf \@titleKor}
+  \end{center}
+
+  \fontsize{12pt}{15pt}\selectfont
+  \begin{tabular}{rl}
+  이름: & \@authorKor \\
+  학과: & \@deptNameKor \\
+  지도교수: & \@advisorMajorKor
+  \end{tabular}
+  \vspace*{1cm}
+
+  \setlength\parindent{5mm}
+  \renewcommand{\baselinestretch}{\@krAbstractLineRatio}\selectfont
+  \fontsize{11pt}{12pt}\selectfont{\indent\input{krabstract}}
+  \setlength\parindent{0mm}
+  \vspace*{\fill}
+  \addevenpage
+}
+
+%%
 %% 목차 일괄 생성
 %%
 \newcommand{\makecontents}{%            % TOC, LOT, LOF 생성
@@ -571,11 +637,20 @@
 \newcommand{\makeacknowledgement}{%
   \newpage
   \thispagestyle{empty}
-  \addcontentsline{toc}{chapter}{Acknowledgement}
+  \if@isKrack
+    \addcontentsline{toc}{chapter}{감사의글}
+  \else
+    \addcontentsline{toc}{chapter}{Acknowledgement}
+  \fi
   \pagenumbering{gobble}
   \begin{center}
-    \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
+    \if@isKrack
+      \fontsize{16pt}{16pt}\selectfont{\bf 감사의글}
+    \else
+      \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
+    \fi
   \end{center}
+  \vspace{5mm}
 
   \setlength\parindent{5mm}
   \renewcommand{\baselinestretch}{\@acknowledgementLineRatio}\selectfont
