@@ -1,11 +1,11 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 2.00
+%%           버전: 2.10
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
-%%    마지막 갱신: 2016. 07. 04
+%%    마지막 갱신: 2016. 07. 06
 %%
 %%  필요한 패키지: TeXLive 2013 or later + ko.TeX
 %%
@@ -34,6 +34,7 @@
 \newif\if@isBibHeader
 \newif\if@isKrabst
 \newif\if@isKrack
+\newif\if@isAsym
 
 %% 새 옵션 모음 - doctor|master, final|draft
 \DeclareOption{doctor}       {\@isDoctortrue}
@@ -45,6 +46,7 @@
 \DeclareOption{oneside}      {\@isTwosidesfalse}
 \DeclareOption{krabst}       {\@isKrabsttrue}
 \DeclareOption{krack}        {\@isKracktrue}
+\DeclareOption{asym}         {\@isAsymtrue}
 
 %% leqno,fleqn,openbib 옵션은 그대로 report 클래스에 전달
 \DeclareOption{leqno}  {\PassOptionsToClass{leqno}  {report}}
@@ -61,6 +63,7 @@
 \@isBibHeaderfalse
 \@isKrabstfalse
 \@isKrackfalse
+\@isAsymfalse
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
@@ -79,10 +82,16 @@
 %% Table of contents, List of figures, List of tables를 Table of Contents에 추가
 \usepackage{tocbibind}
 
-%% 편집용지 설정 - 좀 바꿔야 할 듯 나중에
-\usepackage[inner = 25mm ,       outer = 15mm,
-              top = 30mm,       bottom = 30mm,
-       paperwidth = 182mm, paperheight = 257mm]{geometry}
+%% 편집용지 설정 (4x6 배판 - 190x260 mm2)
+\if@isAsym
+  \usepackage[inner = 25mm ,       outer = 15mm,
+                top = 30mm,       bottom = 30mm,
+         paperwidth = 190mm, paperheight = 260mm]{geometry}
+\else
+  \usepackage[inner = 20mm ,       outer = 20mm,
+                top = 30mm,       bottom = 30mm,
+         paperwidth = 190mm, paperheight = 260mm]{geometry}
+\fi
 
 %% 들여쓰기
 \usepackage{indentfirst}
