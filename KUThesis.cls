@@ -1,13 +1,13 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 2.10
+%%           버전: 2.11
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
-%%    마지막 갱신: 2016. 07. 06
+%%    마지막 갱신: 2016. 10. 21
 %%
-%%  필요한 패키지: TeXLive 2013 or later + ko.TeX
+%%  필요한 패키지: TeXLive 2013 or later + ko.TeX, or XeLaTeX
 %%
 %%       참고자료: KAIST Thesis Templete for LaTeX version 0.4
 %%
@@ -495,19 +495,19 @@
       \begin{center}
         \if@isLongDeptName
           \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@degreeName}\\
-          \fontsize{16pt}{16pt}\selectfont{\bf \@degreeChn士學位 論文으로 提出함}
+          \fontsize{16pt}{16pt}\selectfont{\bf {\@degreeChn}士學位 論文으로 提出함}
           \\[25mm]
         \else
-          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@degreeName{ }\@degreeChn士學位 論文으로 提出함}
+          \fontsize{16pt}{16pt}\selectfont{\bf 이 論文을 \@degreeName{ }{\@degreeChn}士學位 論文으로 提出함}
           \\[30mm]
         \fi
-        \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
+        \fontsize{14pt}{14pt}\selectfont{\bf {\@submitYear}年\ {\@submitMonth}月\ {\@submitDay}日}
         \\[30mm]
         \fontsize{\@univSize}{\@univSize}\selectfont{\bf 高\ 麗\ 大\ 學\ 校\ 大\ 學\ 院}
         \\[5mm]
-        \fontsize{16pt}{16pt}\selectfont{\bf \@deptNameChn}
+        \fontsize{16pt}{16pt}\selectfont{\bf {\@deptNameChn}}
         \\[10mm]
-        \fontsize{16pt}{16pt}\selectfont{\bf \@authorChnSpace}
+        \fontsize{16pt}{16pt}\selectfont{\bf {\@authorChnSpace}}
         \fontsize{14pt}{14pt}\selectfont{\bf \hspace{10mm} (印)}
       \end{center}
     \end{minipage}
@@ -529,9 +529,9 @@
     \renewcommand{\baselinestretch}{1.3}
     \begin{minipage}[t][20mm][t]{112mm}
       \begin{center}
-        \fontsize{15.5pt}{15.5pt}\selectfont{\bf \@authorChn의 \@degreeName{ }\@degreeChn士學位論文 審査를 完了함}
+        \fontsize{15.5pt}{15.5pt}\selectfont{\bf {\@authorChn}의 \@degreeName{ }{\@degreeChn}士學位論文 審査를 完了함}
         \\[30mm]
-        \fontsize{14pt}{14pt}\selectfont{\bf \@submitYear年\ \@submitMonth月\ \@submitDay日}
+        \fontsize{14pt}{14pt}\selectfont{\bf {\@submitYear}年\ {\@submitMonth}月\ {\@submitDay}日}
         \\[20mm]
         \underline{
           \fontsize{16pt}{16pt}\selectfont{\bf 委員長}
