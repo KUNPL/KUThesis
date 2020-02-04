@@ -157,8 +157,8 @@
   \refstepcounter{dummy}
   \makeabstract                            % 초록 페이지 생성
 
-  \pagenumbering{roman}
-  \setcounter{page}{1}
+  %\pagenumbering{roman}                   % 2020년 2월 졸업논문 제출시 과학도서관 지적사항
+  %\setcounter{page}{1}                    % 
   \makecontents
 
   \pagenumbering{arabic}
