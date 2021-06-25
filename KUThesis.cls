@@ -308,6 +308,14 @@
 }
 \@onlypreamble{\submitDate}
 
+% @command approvalDate 인준일자
+\newcommand{\approvalDate}[3]{
+  \newcommand{\@approvalYear}{#1}
+  \newcommand{\@approvalMonth}{#2}
+  \newcommand{\@approvalDay}{#3}
+}
+\@onlypreamble{\approvalDate}
+
 % @command abstractLineSpacing 초록 줄간격
 \newcommand{\abstractLineSpacing}[1]{
   \FPeval{\@abstractLineRatio}{#1/100.0/1.236} 
@@ -531,32 +539,32 @@
       \begin{center}
         \fontsize{15.5pt}{15.5pt}\selectfont{\bf {\@authorChn}의 \@degreeName{ }{\@degreeChn}士學位論文 審査를 完了함}
         \\[30mm]
-        \fontsize{14pt}{14pt}\selectfont{\bf {\@submitYear}年\ {\@submitMonth}月\ {\@submitDay}日}
+        \fontsize{14pt}{14pt}\selectfont{\bf {\@approvalYear}年\ {\@approvalMonth}月\ {\@approvalDay}日}
         \\[20mm]
         \underline{
-          \fontsize{16pt}{16pt}\selectfont{\bf 委員長}
-          \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+          \fontsize{16pt}{16pt}\selectfont{\bf 委員長 \hspace{20mm}{\@refereeChief}}
+          \fontsize{14pt}{14pt}\selectfont{\hspace{20mm}\bf (印)}
         }
         \\[10mm]
         \underline{
-          \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
-          \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+          \fontsize{16pt}{16pt}\selectfont{\bf 委　員 \hspace{20mm}{\@refereeSecond}}
+          \fontsize{14pt}{14pt}\selectfont{\hspace{20mm}\bf (印)}
         }
         \\[10mm]
         \underline{
-          \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
-          \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+          \fontsize{16pt}{16pt}\selectfont{\bf 委　員 \hspace{20mm}{\@refereeThird}}
+          \fontsize{14pt}{14pt}\selectfont{\hspace{20mm}\bf (印)}
         }
         \if@isDoctor
           \\[10mm]
           \underline{
-            \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
-            \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+            \fontsize{16pt}{16pt}\selectfont{\bf 委　員 \hspace{20mm}{\@refereeFourth}}
+            \fontsize{14pt}{14pt}\selectfont{\hspace{20mm}\bf (印)}
           }
           \\[10mm]
           \underline{
-            \fontsize{16pt}{16pt}\selectfont{\bf 委　員}
-            \fontsize{14pt}{14pt}\selectfont{\hspace{60mm}\bf (印)}
+            \fontsize{16pt}{16pt}\selectfont{\bf 委　員 \hspace{20mm}{\@refereeFifth}}
+            \fontsize{14pt}{14pt}\selectfont{\hspace{20mm}\bf (印)}
           }
         \else\fi
       \end{center}
