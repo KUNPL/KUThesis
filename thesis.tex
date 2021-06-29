@@ -9,6 +9,7 @@
 %
 % 예제
 % \documentclass[master,final,oneside]{KUThesis}
+% \documentclass[doctor,oneside]{KUThesis}            % draft + oneside
 
 % 기본옵션은 [doctor,twosides,draft] 입니다.
 \documentclass{KUThesis}
@@ -44,7 +45,22 @@ Research on the fact that I cannot say ``father'' to the real father
 \graduateDate{2016}{2}
 
 % 제출 연,월,일
+% 한문 표지에 대한 도서관 안내
+% : 통상적으로 학위논문 표지 날짜는 제출자가 졸업하는 졸업년월((예)2020년 8월, 2021년 2월)
+% : [2021년 8월]처럼 월까지만 기입도 가능, [2021년 8월  일]처럼 비워두는 것은 안 됨
+% 이전에는 심사용 학위논문 제출일/도서관 제출일을 기입하기도 하였음. 정확한 일자는 대학원 행정실에 문의
 \submitDate{2015}{12}{30}
+
+% 인준(심사위원 확인) 연,월,일
+% 도서관 안내: 심사위원 성함이 기재된 인준지에는 학위논문을 심사가 완료된 날짜로 기입하는 경우가 많습니다
+\approvalDate{2015}{12}{15}
+
+% 심사위원 이름
+\referee[1]{이 심 사}            % 심사위원장
+\referee[2]{오 심 사}
+\referee[3]{허 심 사}
+\referee[4]{김 심 사}
+\referee[5]{안 심 사}
 
 % 본문 줄간격 (규정: 170 - 200)
 \captionLineSpacing{150}
@@ -63,7 +79,7 @@ Research on the fact that I cannot say ``father'' to the real father
 % 참고문헌에 헤더를 추가하고 싶은 경우에 주석 해제
 %\addBibHeader
 
-% 스캔한 승인서가 있을 경우 파일 이름 입력. 스캔 파일의 사이즈는 B5이어야 한다.
+% 스캔한 승인서(.pdf)가 있을 경우 파일 이름 입력. 스캔 파일의 사이즈는 A4/B5이어야 한다.
 %\approvalScan{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
