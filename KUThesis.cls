@@ -1,11 +1,11 @@
 % -*- TeX:UTF-8 -*-
 %%  고려대학교 석·박사 학위논문 LaTeX 템플릿
 %%
-%%           버전: 2.11
+%%           버전: 2.12
 %%
 %%         작성자: 장 진희 ( geniejhang@majimak.com )
 %%           날짜: 2013. 08. 11
-%%    마지막 갱신: 2016. 10. 21
+%%    마지막 갱신: 2021. 12. 06
 %%
 %%  필요한 패키지: TeXLive 2013 or later + ko.TeX, or XeLaTeX
 %%
@@ -32,8 +32,8 @@
 \newif\if@isTOCHeader
 \newif\if@isContentHeader
 \newif\if@isBibHeader
-\newif\if@isKrack
 \newif\if@isAsym
+\newif\if@isEng
 
 %% 새 옵션 모음 - doctor|master, final|draft
 \DeclareOption{doctor}       {\@isDoctortrue}
@@ -43,9 +43,9 @@
 \DeclareOption{debug}        {\@isDebugtrue}
 \DeclareOption{twosides}     {\@isTwosidestrue}
 \DeclareOption{oneside}      {\@isTwosidesfalse}
-\DeclareOption{krabst}       {\@isKrabsttrue}
-\DeclareOption{krack}        {\@isKracktrue}
 \DeclareOption{asym}         {\@isAsymtrue}
+\DeclareOption{eng}          {\@isEngtrue}
+\DeclareOption{kor}          {\@isEngfalse}
 
 %% leqno,fleqn,openbib 옵션은 그대로 report 클래스에 전달
 \DeclareOption{leqno}  {\PassOptionsToClass{leqno}  {report}}
@@ -60,8 +60,8 @@
 \@isTOCHeaderfalse
 \@isContentHeaderfalse
 \@isBibHeaderfalse
-\@isKrackfalse
 \@isAsymfalse
+\@isEngtrue
 \ProcessOptions
 
 %% 11pt,onecolumn,oneside 옵션으로 report 클래스 불러오기
@@ -79,6 +79,9 @@
 
 %% Table of contents, List of figures, List of tables를 Table of Contents에 추가
 \usepackage{tocbibind}
+\usepackage[linktocpage=true]{hyperref}
+\usepackage{titlesec}
+\usepackage{apptools}
 
 %% 편집용지 설정 (4x6 배판 - 190x260 mm2)
 \if@isAsym
@@ -175,8 +178,19 @@
   \fi
 }
 
-%% 고려대학교 공식 영문명칭
-\newcommand{\@koreauniv}{Korea University}
+%% 고려대학교 공식 명칭
+\if@isEng
+  \newcommand{\@koreauniv}{Korea University}
+\else
+  \newcommand{\@koreauniv}{高麗大學校}
+\fi
+
+%% 대학원 공식 명칭
+\if@isEng
+  \newcommand{\@gradschool}{Graduate School}
+\else
+  \newcommand{\@gradschool}{大學院}
+\fi
 
 % @command title 논문 제목
 \renewcommand{\title}[3] {
@@ -248,9 +262,18 @@
 \if@isDoctor
   \newcommand{\@degreeChn}{博}
   \newcommand{\@degreeEng}{Doctor}
+  \newcommand{\@degreeKor}{박사}
 \else
   \newcommand{\@degreeChn}{碩}
   \newcommand{\@degreeEng}{Master}
+  \newcommand{\@degreeKor}{석사}
+\fi
+
+%% 논문 유형
+\if@isEng
+  \newcommand{\@thesisCategory}{Thesis for the Degree\\of \@degreeEng}
+\else
+  \newcommand{\@thesisCategory}{\@degreeChn\; 士\; 學\; 位\; 論\; 文}
 \fi
 
 % @command department 
@@ -403,7 +426,7 @@
 }
 
 %%
-%% 영문 날짜 표기
+%% 날짜 표기
 %%
 \newcommand{\@dateUSenglish}[2]{%  % 미국식 날짜 표기
     \newcommand{\@year}{#1}%
@@ -412,6 +435,12 @@
         January \or February \or March \or April \or May \or June \or
         July \or August \or September \or October \or November \or December \fi
     \@year
+}
+
+\newcommand{\@dataCHchinese}[2]{%  % 한문식 날짜 표기
+    \newcommand{\@year}{#1}%
+    \newcommand{\@month}{#2}%
+    \@year\ 年\ \@month\ 月
 }
 
 %%
@@ -441,42 +470,73 @@
 %%
 %% 앞표지 생성
 %%
-\newcommand{\makefrontcover}{%
-    \newpage
-    \renewcommand{\baselinestretch}{1.3}%
-    \thispagestyle{empty}
-    \begin{minipage}[t][12mm][t]{112mm}
-        \begin{center}
-            \fontsize{16pt}{16pt}\selectfont\bf{Thesis for the Degree\\of \@degreeEng}
-        \end{center}
-    \end{minipage}\\[30mm]
-    \hspace*{-15mm}\begin{minipage}[t][50mm][t]{142mm}
-        \begin{center}
-            \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleEng}
-        \end{center}
-    \end{minipage}\vfill
-    \begin{minipage}[b][85mm][b]{112mm}
-        \begin{center}
-            \fontsize{16pt}{16pt}\selectfont{\bf by}
-            \\[5mm]
-            \fontsize{16pt}{16pt}\selectfont{\bf \@authorEng}
-            \\[5mm]
-            \fontsize{16pt}{16pt}\selectfont{\bf Department of \@deptNameEng}
-            \if@isLongDeptName
-              \\[8mm]
-            \else
-              \\[15mm]
-            \fi
-            \fontsize{18pt}{18pt}\selectfont{\bf Graduate School}
-            \\[5mm]
-            \fontsize{\@univSize}{\@univSize}\selectfont{\bf \@koreauniv}
-            \\[10mm]
-            \fontsize{16pt}{16pt}\selectfont{\bf
-            \@dateUSenglish{\@graduateYear}{\@graduateMonth}}
-        \end{center}
-    \end{minipage}
-    \addevenpage
-}
+\if@isEng
+  \newcommand{\makefrontcover}{%
+      \newpage
+      \renewcommand{\baselinestretch}{1.3}%
+      \thispagestyle{empty}
+      \begin{minipage}[t][12mm][t]{112mm}
+          \begin{center}
+              \fontsize{16pt}{16pt}\selectfont\bf{\@thesisCategory}
+          \end{center}
+      \end{minipage}\\[30mm]
+      \hspace*{-15mm}\begin{minipage}[t][50mm][t]{142mm}
+          \begin{center}
+              \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleEng}
+          \end{center}
+      \end{minipage}\vfill
+      \begin{minipage}[b][85mm][b]{112mm}
+          \begin{center}
+              \fontsize{16pt}{16pt}\selectfont{\bf by}
+              \\[5mm]
+              \fontsize{16pt}{16pt}\selectfont{\bf \@authorEng}
+              \\[5mm]
+              \fontsize{16pt}{16pt}\selectfont{\bf Department of \@deptNameEng}
+              \if@isLongDeptName
+                \\[8mm]
+              \else
+                \\[15mm]
+              \fi
+              \fontsize{18pt}{18pt}\selectfont{\bf \@gradschool}
+              \\[5mm]
+              \fontsize{\@univSize}{\@univSize}\selectfont{\bf \@koreauniv}
+              \\[10mm]
+              \fontsize{16pt}{16pt}\selectfont{\bf
+              \@dateUSenglish{\@graduateYear}{\@graduateMonth}}
+          \end{center}
+      \end{minipage}
+      \addevenpage
+  }
+\else
+  \newcommand{\makefrontcover}{%
+      \newpage
+      \renewcommand{\baselinestretch}{1.3}%
+      \thispagestyle{empty}
+      \begin{minipage}[t][12mm][t]{112mm}
+          \begin{center}
+              \fontsize{16pt}{16pt}\selectfont\bf{\@thesisCategory}
+          \end{center}
+      \end{minipage}\\[30mm]
+      \hspace*{-15mm}\begin{minipage}[t][50mm][t]{142mm}
+          \begin{center}
+              \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleKor}
+          \end{center}
+      \end{minipage}\vfill
+      \begin{minipage}[b][85mm][b]{112mm}
+          \begin{center}
+              \fontsize{\@univSize}{\@univSize}\selectfont{\bf \@koreauniv\ \@gradschool}
+              \\[5mm]
+              \fontsize{16pt}{16pt}\selectfont{\bf \@deptNameChn}
+              \\[5mm]
+              \fontsize{16pt}{16pt}\selectfont{\bf \@authorChnSpace}
+              \\[30mm]
+              \fontsize{16pt}{16pt}\selectfont{\bf
+              \@dataCHchinese{\@graduateYear}{\@graduateMonth}}
+          \end{center}
+      \end{minipage}
+      \addevenpage
+  }
+\fi
 
 %%
 %% 속표지 생성
@@ -491,7 +551,7 @@
         \\[5mm]
         \fontsize{16pt}{16pt}\selectfont\bf{\@degreeChn\ 士\ 學\ 位\ 論\ 文}
         \\[30mm]
-        \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \@titleEng}
+        \fontsize{\@titleSize}{\@titleSize}\selectfont{\bf \if@isEng \@titleEng \else \@titleKor \fi}
       \end{center}
     \end{minipage}\vfill
     \begin{minipage}[b][110mm][b]{112mm}
@@ -621,13 +681,28 @@
 %% 초록 페이지 생성
 %%
 \newcommand{\makeabstract}{%
-  \makeenabstract
-  \makekrabstract
+  \if@isEng
+    \makeenabstract
+    \makekrabstract
+  \else
+    \makekrabstract
+    \makeenabstract
+  \fi
 }
 
 %%
 %% 목차 일괄 생성
 %%
+\if@isEng
+  \renewcommand{\bibname}{References}
+\else
+  \renewcommand{\contentsname}{목록}
+  \renewcommand{\listfigurename}{그림 목록}
+  \renewcommand{\listtablename}{표 목록}
+  \renewcommand{\bibname}{참고문헌 목록}
+  \titleformat{\chapter}[hang]{\Huge \bf}{\IfAppendix{부록\: \thechapter}{제\: \thechapter\ 장}\;\; }{0pt}{\Huge \bf}
+\fi
+
 \newcommand{\makecontents}{%            % TOC, LOT, LOF 생성
   \if@isTOCHeader
     \pagestyle{fancy}
@@ -652,17 +727,17 @@
 \newcommand{\makeacknowledgement}{%
   \newpage
   \thispagestyle{empty}
-  \if@isKrack
-    \addcontentsline{toc}{chapter}{감사의글}
-  \else
+  \if@isEng
     \addcontentsline{toc}{chapter}{Acknowledgement}
+  \else
+    \addcontentsline{toc}{chapter}{감사의 글}
   \fi
   \pagenumbering{gobble}
   \begin{center}
-    \if@isKrack
-      \fontsize{16pt}{16pt}\selectfont{\bf 감사의글}
-    \else
+    \if@isEng
       \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
+    \else
+      \fontsize{16pt}{16pt}\selectfont{\bf 감사의 글}
     \fi
   \end{center}
   \vspace{5mm}
