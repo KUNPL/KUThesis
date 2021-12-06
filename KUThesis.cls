@@ -32,7 +32,6 @@
 \newif\if@isTOCHeader
 \newif\if@isContentHeader
 \newif\if@isBibHeader
-\newif\if@isKrabst
 \newif\if@isKrack
 \newif\if@isAsym
 
@@ -61,7 +60,6 @@
 \@isTOCHeaderfalse
 \@isContentHeaderfalse
 \@isBibHeaderfalse
-\@isKrabstfalse
 \@isKrackfalse
 \@isAsymfalse
 \ProcessOptions
@@ -173,9 +171,6 @@
 
   \if@isFinal
     \refstepcounter{dummy}
-    \if@isKrabst
-      \makekrabstract
-    \fi
     \makeacknowledgement
   \fi
 }
@@ -579,9 +574,31 @@
 }
 
 %%
-%% 초록 페이지 생성
+%% 한국어 초록 페이지 생성
 %%
-\newcommand{\makeabstract}{%
+\newcommand{\makekrabstract}{%
+  \newpage
+  \thispagestyle{empty}
+  \addcontentsline{toc}{chapter}{초록}
+  \pagenumbering{gobble}
+  \vspace*{\fill}
+  \begin{center}
+    \fontsize{16pt}{16pt}\selectfont{\bf 초\; 록}
+    \\[15mm]
+  \end{center}
+
+  \setlength\parindent{5mm}
+  \renewcommand{\baselinestretch}{\@abstractLineRatio}\selectfont
+  \fontsize{11pt}{12pt}\selectfont{\indent\input{krabstract}}
+  \setlength\parindent{0mm}
+  \vspace*{\fill}
+  \addevenpage
+}
+
+%%
+%% 영어 초록 페이지 생성
+%%
+\newcommand{\makeenabstract}{%
   \newpage
   \thispagestyle{empty}
   \addcontentsline{toc}{chapter}{Abstract}
@@ -589,42 +606,23 @@
   \vspace*{\fill}
   \begin{center}
     \fontsize{16pt}{16pt}\selectfont{\bf Abstract}
+    \\[15mm]
   \end{center}
 
   \setlength\parindent{5mm}
   \renewcommand{\baselinestretch}{\@abstractLineRatio}\selectfont
-  \fontsize{11pt}{12pt}\selectfont{\indent\input{abstract}}
+  \fontsize{11pt}{12pt}\selectfont{\indent\input{enabstract}}
   \setlength\parindent{0mm}
   \vspace*{\fill}
   \addevenpage
 }
 
 %%
-%% 한국어 초록 페이지 생성
+%% 초록 페이지 생성
 %%
-\newcommand{\makekrabstract}{%
-  \newpage
-  \thispagestyle{empty}
-  \addcontentsline{toc}{chapter}{국문초록}
-  \pagenumbering{gobble}
-  \begin{center}
-    \fontsize{16pt}{16pt}\selectfont{\bf \@titleKor}
-  \end{center}
-
-  \fontsize{12pt}{15pt}\selectfont
-  \begin{tabular}{rl}
-  이름: & \@authorKor \\
-  학과: & \@deptNameKor \\
-  지도교수: & \@advisorMajorKor
-  \end{tabular}
-  \vspace*{1cm}
-
-  \setlength\parindent{5mm}
-  \renewcommand{\baselinestretch}{\@krAbstractLineRatio}\selectfont
-  \fontsize{11pt}{12pt}\selectfont{\indent\input{krabstract}}
-  \setlength\parindent{0mm}
-  \vspace*{\fill}
-  \addevenpage
+\newcommand{\makeabstract}{%
+  \makeenabstract
+  \makekrabstract
 }
 
 %%
