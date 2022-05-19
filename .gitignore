@@ -17,4 +17,6 @@ Thumbs.db
 *.toc
 *.bbl
 *.blg
-*.pdf
+*.synctex.gz
+
+thesis.pdf
